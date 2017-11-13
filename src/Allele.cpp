@@ -1,6 +1,7 @@
 #include "Allele.hpp"
 
-Allele::Allele(){}
+Allele::Allele(std::string sequence, double frequency)
+: sequence_(sequence), frequency_(frequency) {}
 	 
 Allele::~Allele(){}
     

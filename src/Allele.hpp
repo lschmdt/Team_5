@@ -31,7 +31,7 @@ class Allele
 		/** \fn allele constructor 
 		 *
 		 * */ 
-		Allele(); 
+		Allele(std::string sequence, double frequency); 
 		
 		/** allele destructor 
 		 *  
