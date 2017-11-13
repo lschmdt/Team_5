@@ -3,17 +3,15 @@ project (Genetics)
 
 set(CMAKE_CXX_FLAGS " -W -Wall -pedantic -std=c++11")
 
-add_executable(Generations src/Allele.cpp src/Generation.cpp src/Simulation.cpp)
-
-
-
-
 enable_testing()
 add_subdirectory(gtest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-target_link_libraries(generationstest gtest gtest_main)
-add_test(generationstest generationstest)
+
+add_executable(Generations src/Allele.cpp src/Generation.cpp src/Simulation.cpp src/main.cpp)
+
+#target_link_libraries(generationstest gtest gtest_main)
+#add_test(generationstest generationstest)
 
 
 # check if Doxygen is installed
@@ -21,8 +19,8 @@ find_package(Doxygen)
 if (DOXYGEN_FOUND)
     # set input and output files
 
-	set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}doc/Doxyfile.in)
-    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}doc/Doxyfile)
+	set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/doc/Doxyfile)
     # request to configure the file
     configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
     message("Doxygen build started")
