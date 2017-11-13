@@ -2,6 +2,7 @@
 #define GENERATION_H
 
 #include <vector>
+#include "Allele.hpp"
 
 /*! \class Generation
  * 
@@ -16,7 +17,8 @@ class Generation
 	private: 
 	
 		std::vector<Allele*> individuals_;
-	
+		int nb_individual_;
+		
 	public: 
 	
 		/** \fn generation constructor 
@@ -34,10 +36,13 @@ class Generation
 		*/
 		void update();
 		
-		/**getter
-		 * 
+		/**getter of all types of Alleles
 		 */
 		std::vector<Allele*> getIndividuals();
+		
+		/** \fn compare
+		 */
+		 bool compare(std::string s1, std::string s2);
 
 
 };

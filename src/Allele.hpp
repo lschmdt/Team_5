@@ -24,7 +24,7 @@ class Allele
 		 * in the genotype-database and initialises the attribut sequences_
 		 *   
 		 * */ 
-		void readFromFile(ostream& Data);
+		void readFromFile(std::ostream& Data);
 	
 	public: 
 	
@@ -45,3 +45,4 @@ class Allele
 
 };
 
+#endif

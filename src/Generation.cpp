@@ -6,6 +6,6 @@ Generation::~Generation(){}
 	
 void Generation::update(){}
 
-std::vector<Allele*> Generation::getIndividual(){
+std::vector<Allele*> Generation::getIndividuals(){
 	return individuals_;
 }
