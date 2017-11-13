@@ -37,6 +37,9 @@ class Simulation
 		/**getter of attribut evolution_pop
 		 */
 		std::vector<Generation*> getEvolutionPop();
+		
+		vector<string> readFromFile(vector<int> NuclPositions);
+
 
 };
 
