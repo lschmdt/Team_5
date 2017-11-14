@@ -1,15 +1,16 @@
 #include "Simulation.hpp"
+using namespace std;
 
 Simulation::Simulation()
 {}
 
-std::vector<Generation*> Simulation::getEvolutionPop(){
+vector<Generation*> Simulation::getEvolutionPop(){
 	return evolution_pop_;
 }
 
 vector<string> Simulation:: readFromFile(vector<int> NuclPositions)
 {
-	vector<string> nuclMarkerSite; 
+	vector<std::string> nuclMarkerSite; 
 	string line;
 	string sequence;
 	ifstream genomes("test.fa");
@@ -26,7 +27,7 @@ vector<string> Simulation:: readFromFile(vector<int> NuclPositions)
 			}
 		}
 	
-	for (auto n: nuclMarkerSite){cout << n << endl;}					//afficher la séquence de chaque individu
+	for (auto n: nuclMarkerSite){ cout << n << endl;}					//afficher la séquence de chaque individu
 	return nuclMarkerSite;
 		
 }

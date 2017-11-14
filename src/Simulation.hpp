@@ -2,6 +2,9 @@
 #define SIMULATION_H
 
 #include <vector>
+#include "Generation.hpp"
+#include "Allele.hpp"
+#include <iostream>
 
 
 
@@ -38,7 +41,7 @@ class Simulation
 		 */
 		std::vector<Generation*> getEvolutionPop();
 		
-		vector<string> readFromFile(vector<int> NuclPositions);
+		std::vector<std::string> readFromFile(std::vector<int> NuclPositions);
 
 
 };
