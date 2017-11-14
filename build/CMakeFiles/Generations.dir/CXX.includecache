@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Lea/Desktop/Team_5/src/Allele.cpp
+Allele.hpp
+/Users/Lea/Desktop/Team_5/src/Allele.hpp
+
+/Users/Lea/Desktop/Team_5/src/Allele.hpp
+vector
+-
+fstream
+-
+
+/Users/Lea/Desktop/Team_5/src/Generation.cpp
+Generation.hpp
+/Users/Lea/Desktop/Team_5/src/Generation.hpp
+
+/Users/Lea/Desktop/Team_5/src/Generation.hpp
+vector
+-
+Allele.hpp
+/Users/Lea/Desktop/Team_5/src/Allele.hpp
+
+/Users/Lea/Desktop/Team_5/src/Simulation.cpp
+Simulation.hpp
+/Users/Lea/Desktop/Team_5/src/Simulation.hpp
+
+/Users/Lea/Desktop/Team_5/src/Simulation.hpp
+vector
+-
+
+/Users/Lea/Desktop/Team_5/src/main.cpp
+Allele.hpp
+/Users/Lea/Desktop/Team_5/src/Allele.hpp
+Simulation.hpp
+/Users/Lea/Desktop/Team_5/src/Simulation.hpp
+Generation.hpp
+/Users/Lea/Desktop/Team_5/src/Generation.hpp
+
