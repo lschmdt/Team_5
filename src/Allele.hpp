@@ -42,6 +42,8 @@ class Allele
 		 std::string getSequence();
 
 		 double getFrequency();
+		 
+		 void setFrequency(double freq);
 
 };
 

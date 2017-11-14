@@ -1,10 +1,12 @@
+
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
+#include <iostream>
 #include <vector>
+//#include "Generation.cpp"
 #include "Generation.hpp"
 #include "Allele.hpp"
-#include <iostream>
 
 
 
@@ -39,11 +41,13 @@ class Simulation
 		
 		/**getter of attribut evolution_pop
 		 */
-		std::vector<Generation*> getEvolutionPop();
+		std::vector<Generation*> getEvolutionPop();	//pas sûr de l'utilité de cette méthode, on n'appellera probablement pas un ensemble de générations depuis une autre classe que Simlation #Lululafripouille
 		
-		std::vector<std::string> readFromFile(std::vector<int> NuclPositions);
-
+		std::vector<std::string> readFromFile(std::vector<int> NuclPositions, std::ifstream inputFile);
+		
+		void createNewGeneration();
 
 };
 
 #endif
+

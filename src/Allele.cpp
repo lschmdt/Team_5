@@ -14,3 +14,9 @@ std::string Allele::getSequence(){
 double Allele::getFrequency(){
 	return frequency_;
 } 
+
+void Allele::setFrequency(double freq) {
+	frequency_ = freq;
+}
+
+

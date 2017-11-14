@@ -20,7 +20,7 @@ class Generation
 	private: 
 	
 		std::vector<Allele*> alleles_;
-		int nb_individual_;
+		int nb_individuals_;
 		
 	public: 
 	
@@ -28,6 +28,8 @@ class Generation
 		 *
 		 * */ 
 		Generation(std::vector<std::string> list); 
+		
+		Generation();
 		
 		/** generation destructor 
 		 * 
@@ -43,11 +45,19 @@ class Generation
 		 */
 		std::vector<Allele*> getAlleles();
 		
+		int getNbIndividuals();
+		
+		void allelesPushBack(Allele*);
+		
+		void setAlleleFrequency(int i, double frequency);
+		
+		void setGenerationLength(int i);
+		
 		/** \fn compare
 		 */
-		bool compare(std::string s1, std::string s2);
-		
-		void sort (std::vector<std::string> all); 
+		 bool compare(std::string s1, std::string s2);
+		 
+		 void sort(std::vector<std::string> all);
 
 
 };
