@@ -41,11 +41,12 @@ class Simulation
 		
 		/**getter of attribut evolution_pop
 		 */
-		std::vector<Generation*> getEvolutionPop();	//pas sûr de l'utilité de cette méthode, on n'appellera probablement pas un ensemble de générations depuis une autre classe que Simlation #Lululafripouille
+		std::vector<Generation*> getEvolutionPop();
 		
 		std::vector<std::string> readFromFile(std::vector<int> NuclPositions, std::ifstream inputFile);
 		
 		void createNewGeneration();
+		
 
 };
 
