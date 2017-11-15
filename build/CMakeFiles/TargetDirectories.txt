@@ -1,10 +1,4 @@
-/Users/Lea/Desktop/Team_5/build/CMakeFiles/rebuild_cache.dir
-/Users/Lea/Desktop/Team_5/build/CMakeFiles/edit_cache.dir
-/Users/Lea/Desktop/Team_5/build/CMakeFiles/test.dir
-/Users/Lea/Desktop/Team_5/build/CMakeFiles/doc.dir
-/Users/Lea/Desktop/Team_5/build/CMakeFiles/Generations.dir
-/Users/Lea/Desktop/Team_5/build/gtest/CMakeFiles/test.dir
-/Users/Lea/Desktop/Team_5/build/gtest/CMakeFiles/rebuild_cache.dir
-/Users/Lea/Desktop/Team_5/build/gtest/CMakeFiles/edit_cache.dir
-/Users/Lea/Desktop/Team_5/build/gtest/CMakeFiles/gtest_main.dir
-/Users/Lea/Desktop/Team_5/build/gtest/CMakeFiles/gtest.dir
+/home/localguest/Documents/Team_5/build/CMakeFiles/doc.dir
+/home/localguest/Documents/Team_5/build/gtest/CMakeFiles/gtest.dir
+/home/localguest/Documents/Team_5/build/CMakeFiles/Generations.dir
+/home/localguest/Documents/Team_5/build/gtest/CMakeFiles/gtest_main.dir

@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -6,39 +6,63 @@
 
 #IncludeRegexTransform: 
 
-/Users/Lea/Desktop/Team_5/src/Allele.cpp
+/home/localguest/Documents/Team_5/src/Allele.cpp
 Allele.hpp
-/Users/Lea/Desktop/Team_5/src/Allele.hpp
+/home/localguest/Documents/Team_5/src/Allele.hpp
 
-/Users/Lea/Desktop/Team_5/src/Allele.hpp
+/home/localguest/Documents/Team_5/src/Allele.hpp
 vector
 -
 fstream
 -
 
-/Users/Lea/Desktop/Team_5/src/Generation.cpp
+/home/localguest/Documents/Team_5/src/Generation.cpp
 Generation.hpp
-/Users/Lea/Desktop/Team_5/src/Generation.hpp
-
-/Users/Lea/Desktop/Team_5/src/Generation.hpp
-vector
+/home/localguest/Documents/Team_5/src/Generation.hpp
+cassert
 -
-Allele.hpp
-/Users/Lea/Desktop/Team_5/src/Allele.hpp
-
-/Users/Lea/Desktop/Team_5/src/Simulation.cpp
-Simulation.hpp
-/Users/Lea/Desktop/Team_5/src/Simulation.hpp
-
-/Users/Lea/Desktop/Team_5/src/Simulation.hpp
-vector
+iostream
 -
 
-/Users/Lea/Desktop/Team_5/src/main.cpp
+/home/localguest/Documents/Team_5/src/Generation.hpp
+vector
+-
+map
+-
+string
+-
+memory
+-
 Allele.hpp
-/Users/Lea/Desktop/Team_5/src/Allele.hpp
+/home/localguest/Documents/Team_5/src/Allele.hpp
+
+/home/localguest/Documents/Team_5/src/Simulation.cpp
+iostream
+-
+random
+-
 Simulation.hpp
-/Users/Lea/Desktop/Team_5/src/Simulation.hpp
+/home/localguest/Documents/Team_5/src/Simulation.hpp
+
+/home/localguest/Documents/Team_5/src/Simulation.hpp
+iostream
+-
+vector
+-
 Generation.hpp
-/Users/Lea/Desktop/Team_5/src/Generation.hpp
+/home/localguest/Documents/Team_5/src/Generation.hpp
+Allele.hpp
+/home/localguest/Documents/Team_5/src/Allele.hpp
+fstream
+-
+cassert
+-
+
+/home/localguest/Documents/Team_5/src/main.cpp
+Allele.hpp
+/home/localguest/Documents/Team_5/src/Allele.hpp
+Simulation.hpp
+/home/localguest/Documents/Team_5/src/Simulation.hpp
+Generation.hpp
+/home/localguest/Documents/Team_5/src/Generation.hpp
 

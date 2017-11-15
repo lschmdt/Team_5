@@ -4,19 +4,19 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/Lea/Desktop/Team_5/gtest/src/gtest-all.cc" "/Users/Lea/Desktop/Team_5/build/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+  "/home/localguest/Documents/Team_5/gtest/src/gtest-all.cc" "/home/localguest/Documents/Team_5/build/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
   )
-set(CMAKE_CXX_COMPILER_ID "Clang")
-
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "../gtest/include"
-  "../gtest"
-  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
   )
 
-# Fortran module output directory.
-set(CMAKE_Fortran_TARGET_MODULE_DIR "")
+# The include file search paths:
+set(CMAKE_C_TARGET_INCLUDE_PATH
+  "../gtest/include"
+  "../gtest"
+  )
+set(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
+set(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
+set(CMAKE_ASM_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

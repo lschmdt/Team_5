@@ -1,4 +1,4 @@
-# Install script for directory: /Users/Lea/Desktop/Team_5
+# Install script for directory: /home/localguest/Documents/Team_5
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -27,9 +27,14 @@ if(NOT CMAKE_INSTALL_COMPONENT)
   endif()
 endif()
 
+# Install shared libraries without execute permission?
+if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
+  set(CMAKE_INSTALL_SO_NO_EXE "1")
+endif()
+
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/Lea/Desktop/Team_5/build/gtest/cmake_install.cmake")
+  include("/home/localguest/Documents/Team_5/build/gtest/cmake_install.cmake")
 
 endif()
 
@@ -41,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/Lea/Desktop/Team_5/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/localguest/Documents/Team_5/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
