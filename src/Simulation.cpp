@@ -20,7 +20,12 @@ Simulation::Simulation(std::vector<int> marker_positions)
 }
 Simulation::~Simulation()
 {	input_file_.close();
-    output_file_.close();
+  	output_file_.close();
+ for(auto gen: evolution_pop_)
+ {	gen=nullptr;
+  	delete gen;
+ }
+ evolution_pop_.clear();
 }
 std::vector<Generation*> Simulation::getEvolutionPop(){
 	return evolution_pop_;
