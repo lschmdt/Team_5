@@ -64,6 +64,30 @@ TEST (SimulationTest, createNewGeneration_NewGeneration) {
 	EXPECT_EQ(sum, 1.0);
 }
 
+/*TEST (SimulationTest, CreateNewGeneration_averageFrequencies_shouldEqual_initialFrequencies) {
+	
+	std::vector<double> averageFreq (4,0); //car 4 alleles dans ce cas precis
+	 
+	for (int i(0); i< 100 ; ++i) {   //moyenne des frequences arbitrairement faite sur 100 
+	//essais differents (peut etre pas assez) a partir d une meme generation 
+									 
+		Simulation S (new Generation ({"aa","ca","aa","ca","aa","ta","ga","aa","ta","ta"}));
+		S.createNewGeneration();
+		for (int j(0); j< 4 ; ++j) { 
+			averageFreq[j]+= (S.getEvolutionPop()).back()->getAlleles()[j]->getFrequency();
+		}
+	}
+	
+	for (int k(0); k<4; ++k) {
+		averageFreq[k] *= 1/100;
+	}
+	
+	EXPECT_NEAR(averageFreq[0], 4/10.);
+	EXPECT_NEAR(averageFreq[1], 2/10.);
+	EXPECT_NEAR(averageFreq[2], 3/10.);
+	EXPECT_NEAR(averageFreq[3], 1/10.);
+	
+}*/
 
 int main(int argc, char **argv) 
 {
