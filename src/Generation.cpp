@@ -36,9 +36,11 @@ void Generation::setGenerationLength(int i) {
 	nb_individuals_ = i;
 }
 
+/*
 bool Generation::compare(std::string s1, std::string s2) {
 	return s1==s2;
 }
+*/
 
 void Generation::sort(std::vector<std::string> all){ 
 	/*std::map<std::string, int> sort; 
