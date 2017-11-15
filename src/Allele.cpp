@@ -5,7 +5,6 @@ Allele::Allele(std::string sequence, double frequency)
 	 
 Allele::~Allele(){}
     
-void Allele::readFromFile(std::ostream& Data){}
 
 std::string Allele::getSequence(){
 	return sequence_;
