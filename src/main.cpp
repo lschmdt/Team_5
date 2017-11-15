@@ -10,5 +10,12 @@ int main(int argc, char**argv) {
 		S.createNewGeneration();
 	}
 	S.printTerminal();
+	
+		
+	std::vector<int> markers= std::vector<int>{3,4,7};
+	Simulation S2(markers);
+	S2.printTerminal();
+	S2.run(3);
+	
 	return 0;
 }
