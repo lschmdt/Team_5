@@ -13,7 +13,8 @@ TEST (SimulationTest, readFromFile_)
 {
 	Simulation sim(new Generation());
 	ifstream inputFile;
-	inputFile.open("../test/test/test.fa");
+	//inputFile.open("../test/test/test.fa");
+	inputFile.open("../res/test.fa");
 	
 	vector<int> test = {0,2,4,6};
 	vector<string> Alleles = sim.readFromFile(test, inputFile);
@@ -23,6 +24,16 @@ TEST (SimulationTest, readFromFile_)
 	EXPECT_EQ(Alleles[2], "TCTC");
 	
 	inputFile.close();	
+}
+TEST (SimulationTest, readFromFile_2) 
+{	vector<int> test = {0,2,4,6};
+	Simulation sim(test);
+	Generation* gen(sim.getEvolutionPop().back());
+	cout<<gen->getAlleles().size();
+	/*	Here we verify that the allele sequence is not saved twice if it is 
+	 * 	the same sequence.	*/
+	EXPECT_EQ(gen->getAlleles()[0]->getSequence(), "TCAC");
+	EXPECT_EQ(gen->getAlleles()[1]->getSequence(), "TCTC");
 }
 
 TEST (GenerationTest, sort) {
