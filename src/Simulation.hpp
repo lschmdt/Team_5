@@ -30,7 +30,7 @@ class Simulation
 		/** \fn simulation constructor 
 		 *
 		 * */ 
-		Simulation(); 
+		Simulation(Generation* firstGen); 
 		
 		/** simulation destructor 
 		 * 
@@ -43,11 +43,11 @@ class Simulation
 		 */
 		std::vector<Generation*> getEvolutionPop();
 		
-		std::vector<std::string> readFromFile(std::vector<int> NuclPositions, std::ifstream inputFile);
+		std::vector<std::string> readFromFile(std::vector<int> NuclPositions, std::ifstream& inputFile);
 		
 		void createNewGeneration();
 		
-
+		void printTerminal();
 };
 
 #endif
