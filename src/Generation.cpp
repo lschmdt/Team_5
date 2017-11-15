@@ -7,6 +7,7 @@ using namespace std;
 Generation::Generation(){}
 
 Generation::Generation(std::vector<std::string> list) {
+	assert (list.size() > 0);
 	sort(list);
 	nb_individuals_ = list.size();
 }
