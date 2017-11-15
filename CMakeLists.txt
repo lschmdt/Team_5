@@ -5,13 +5,23 @@ set(CMAKE_CXX_FLAGS " -W -Wall -pedantic -std=c++11")
 
 enable_testing()
 add_subdirectory(gtest)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+set(SOURCE_FILES
+	src/main.cpp
+	src/Simulation.cpp
+	src/Simulation.hpp
+	src/Allele.cpp
+	src/Allele.hpp
+	src/Generation.cpp
+	src/Generation.hpp)
 
 
-add_executable(Generations src/Allele.cpp src/Generation.cpp src/Simulation.cpp src/main.cpp)
+include_directories(${gtest_SOURCE_DIR}/include${gtest_SOURCE_FILES})
+add_executable(Genetics ${SOURCE_FILES})
+add_executable(genetics_unittest src/Simulation.cpp src/Allele.cpp src/Generation.cpp test/test/genetics_unittest.cpp)
 
-#target_link_libraries(generationstest gtest gtest_main)
-#add_test(generationstest generationstest)
+
+target_link_libraries(genetics_unittest gtest gtest_main)
+add_test(genetics_unittest genetics_unittest)
 
 
 # check if Doxygen is installed
