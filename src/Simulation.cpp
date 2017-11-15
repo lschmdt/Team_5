@@ -105,7 +105,6 @@ void Simulation::run(size_t time)
 
 
 void Simulation::writeFrequencies(std::ofstream& Output){
-    Output<<evolution_pop_.size()<<"\t";
     std::vector<Allele*> alleles=std::vector<Allele*>(evolution_pop_.back()->getAlleles());	//Recovery of overall allele vector simplifies code
 
     for(size_t i(0);i<alleles.size();++i)
@@ -122,7 +121,7 @@ void Simulation::writeGenotypes(std::ofstream& Output){
     std::vector<Allele*> alleles=std::vector<Allele*>(evolution_pop_.back()->getAlleles());
     for(size_t i(0);i<alleles.size();++i)
     {
-        Output<<alleles[i];
+        Output<<alleles[i]->getFrequency();
         if(i!=alleles.size()-1)
         {	Output<<"|";
         }
