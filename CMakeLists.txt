@@ -12,7 +12,9 @@ set(SOURCE_FILES
 	src/Allele.cpp
 	src/Allele.hpp
 	src/Generation.cpp
-	src/Generation.hpp)
+	src/Generation.hpp
+	src/Experiment.cpp
+	src/Experiment.hpp)
 
 
 include_directories(${gtest_SOURCE_DIR}/include${gtest_SOURCE_FILES})
