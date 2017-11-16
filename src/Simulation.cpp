@@ -6,22 +6,23 @@
 using namespace std;
 
 Simulation::Simulation(Generation* firstGen){
+	random_device rd;
+  	gen=mt19937(rd());
 	evolution_pop_.push_back(firstGen);
 }
 Simulation::Simulation(std::vector<int> marker_positions)
 {
     input_file_.open("../res/test.fa");
     assert(!input_file_.fail());
-
-    output_file_.open("../res/frequencies.txt");
-    assert(!output_file_.fail());
+    random_device rd;
+    gen=mt19937(rd());
 
     evolution_pop_.push_back(new Generation(readFromFile(marker_positions, input_file_)));
 }
 Simulation::~Simulation()
 {	input_file_.close();
-  	output_file_.close();
- for(auto gen: evolution_pop_)
+  
+ for(auto& gen: evolution_pop_)
  {	gen=nullptr;
   	delete gen;
  }
@@ -58,8 +59,7 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, std::ifstream
 
 
 void Simulation::createNewGeneration() {
-	static std::random_device rd;
-	static std::mt19937 gen(rd());
+	
 	Generation* nextGen (new Generation());
 	
 	Generation* lastGen (evolution_pop_[evolution_pop_.size()-1]);
@@ -93,46 +93,5 @@ void Simulation::printTerminal() {
 		}
 	}
 }
-
-
-void Simulation::run(size_t time)
-{	size_t time_step(0);
-
-    while(time_step<time)
-    {	output_file_<<time_step<<"\t";
-        writeFrequencies(output_file_);
-        createNewGeneration();
-
-        ++time_step;
-    }
-    writeGenotypes(output_file_);
-}
-
-
-void Simulation::writeFrequencies(std::ofstream& Output){
-    std::vector<Allele*> alleles=std::vector<Allele*>(evolution_pop_.back()->getAlleles());	//Recovery of overall allele vector simplifies code
-
-    for(size_t i(0);i<alleles.size();++i)
-    {	Output<<alleles[i]->getFrequency();
-        if(i!=alleles.size()-1)
-        {	Output<<"|";
-        }
-    }
-    Output<<endl;
-}
-
-void Simulation::writeGenotypes(std::ofstream& Output){
-    Output<<"\t";
-    std::vector<Allele*> alleles=std::vector<Allele*>(evolution_pop_.back()->getAlleles());
-    for(size_t i(0);i<alleles.size();++i)
-    {
-        Output<<alleles[i]->getSequence();
-        if(i!=alleles.size()-1)
-        {	Output<<"|";
-        }
-    }
-}
-
-
 
 
