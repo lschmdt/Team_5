@@ -9,6 +9,7 @@
 #include "Allele.hpp"
 #include <fstream>
 #include <cassert>
+#include <random>
 
 
 
@@ -26,7 +27,7 @@ class Simulation
 	
 	std::vector<Generation*> evolution_pop_;  /**<	Vector of all generations within the overall simulation.	*/
         std::ifstream input_file_;  /**<	Opening of the file the simulation will read from.	*/
-        std::ofstream output_file_; /**<	File in which time steps, individual allele frequencies and phenotypes will be written.	*/
+        std::mt19937 gen;							/**<	Device useful to generate random numbers for the creation of generations.	*/
 	
 	public: 
 	
@@ -59,18 +60,7 @@ class Simulation
 		void createNewGeneration();
 		
 		void printTerminal();
-		/**	A public function running the overall simulation of genetics during a given
-		 * 	time.
-		 * 	@param size_t time: The time of the simulation (in steps)	*/
 
-		void run(size_t time);
-		/**	A public function writing allele frequencies in an external file.
-		 * @param ofstream: External file.	*/
-		void writeFrequencies(std::ofstream& Output);
-
-		/**	A public function writing allele genotypes in a file.
-		 * 	@param ofstream: External file.	*/
-		void writeGenotypes(std::ofstream& Output);
 };
 
 #endif
