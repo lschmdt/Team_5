@@ -1,6 +1,7 @@
 #include "Allele.hpp"
 #include "Simulation.hpp"
 #include "Generation.hpp"
+#include "Experiment.hpp"
 
 int main(int argc, char**argv) {
 	Simulation S ({new Generation({"a","a","a","a","a","a","a","b"})});
@@ -11,11 +12,12 @@ int main(int argc, char**argv) {
 	}
 	S.printTerminal();
 	
-		
-	std::vector<int> markers= std::vector<int>{3,4,7};
-	Simulation S2(markers);
-	S2.printTerminal();
-	S2.run(3);
+	
+	std::vector<int> markers= std::vector<int>{3,4};
+	std::vector<Simulation*> sim=std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
+	Experiment exp(sim);
+	
+	exp.runall(10);
 	
 	return 0;
 }
