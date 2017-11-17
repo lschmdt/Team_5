@@ -59,17 +59,24 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, std::ifstream
 
 
 void Simulation::createNewGeneration() {
-	
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
 	Generation* nextGen (new Generation());
 	
 	Generation* lastGen (evolution_pop_[evolution_pop_.size()-1]);
 	int sampleSize (lastGen->getNbIndividuals());
+	int sampleResidue(lastGen->getNbIndividuals());
 	double proba (0);
 	for (size_t i(0); i < lastGen->getAlleles().size(); ++i) {
 		if (lastGen != nullptr) {
-			proba = lastGen->getAlleles()[i]->getFrequency(); 
+			assert(lastGen->getAlleles()[i]->getFrequency() >= 0.0);
+			assert(lastGen->getAlleles()[i]->getFrequency() <= 1.0);
+			proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
 			std::binomial_distribution<> bin_dis (sampleSize, proba);
 			int a(bin_dis(gen));
+			
+			sampleResidue -= lastGen->getAlleles()[i]->getFrequency() * lastGen->getNbIndividuals();
+			
 			if (i == lastGen->getAlleles().size()-1) {
 				a = sampleSize;											//dernier allèle qui complète
 			}
@@ -77,14 +84,19 @@ void Simulation::createNewGeneration() {
 				nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), a/double(lastGen->getNbIndividuals())));
 			}
 			if (sampleSize <= 0) {
+				for (size_t j(i+1); j <  lastGen->getAlleles().size(); ++j) {
+					nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), 0));
+				}
 				i = lastGen->getAlleles().size() + 1;					//sortie de la boucle
-			}
+			} 
 			sampleSize -= a;
+			
 		}
 	}
 	nextGen->setGenerationLength(lastGen->getNbIndividuals());
 	evolution_pop_.push_back(nextGen);
 }
+
 
 void Simulation::printTerminal() {
 	for (auto gen : getEvolutionPop()) {
