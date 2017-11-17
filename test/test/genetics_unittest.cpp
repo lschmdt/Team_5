@@ -3,6 +3,7 @@
 #include "../../src/Simulation.hpp"
 #include "../../src/Allele.hpp"
 #include "../../gtest/include/gtest/gtest.h"
+#include <array>
 
 using namespace std;
 
@@ -61,15 +62,16 @@ TEST (SimulationTest, createNewGeneration_NewGeneration) {
 	for (size_t i (0); i < S.getEvolutionPop()[1]->getAlleles().size(); ++i) {
 		sum += S.getEvolutionPop()[1]->getAlleles()[i]->getFrequency();
 	}
-	EXPECT_EQ(sum, 1.0);
+	EXPECT_NEAR(sum, 1.0, 1e-9);
 }
 
-/*TEST (SimulationTest, CreateNewGeneration_averageFrequencies_shouldEqual_initialFrequencies) {
+TEST (SimulationTest, CreateNewGeneration_averageFrequencies_shouldEqual_initialFrequencies) {
 	
-	std::vector<double> averageFreq (4,0); //car 4 alleles dans ce cas precis
-	 
-	for (int i(0); i< 100 ; ++i) {   //moyenne des frequences arbitrairement faite sur 100 
-	//essais differents (peut etre pas assez) a partir d une meme generation 
+	std::array<double, 4> averageFreq = {{0, 0, 0, 0}}; //car 4 alleles dans ce cas precis
+	
+	int nbGen (10000);
+	
+	for (int i(0); i < nbGen ; ++i) {   //moyenne des frequences arbitrairement faite sur 10000 
 									 
 		Simulation S (new Generation ({"aa","ca","aa","ca","aa","ta","ga","aa","ta","ta"}));
 		S.createNewGeneration();
@@ -79,15 +81,13 @@ TEST (SimulationTest, createNewGeneration_NewGeneration) {
 	}
 	
 	for (int k(0); k<4; ++k) {
-		averageFreq[k] *= 1/100;
+		averageFreq[k] /= double(nbGen);
 	}
-	
-	EXPECT_NEAR(averageFreq[0], 4/10.);
-	EXPECT_NEAR(averageFreq[1], 2/10.);
-	EXPECT_NEAR(averageFreq[2], 3/10.);
-	EXPECT_NEAR(averageFreq[3], 1/10.);
-	
-}*/
+	EXPECT_NEAR(averageFreq[0], 4/10., 0.02);
+	EXPECT_NEAR(averageFreq[1], 2/10., 0.02);
+	EXPECT_NEAR(averageFreq[2], 3/10., 0.02);
+	EXPECT_NEAR(averageFreq[3], 1/10., 0.02);
+}
 
 int main(int argc, char **argv) 
 {
