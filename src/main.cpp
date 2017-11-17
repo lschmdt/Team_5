@@ -28,7 +28,7 @@ int main( int argc, char **argv ) {
 	S.printTerminal();
 	
 		
-	std::vector<Simulation*> sim=std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
+	std::vector<Simulation*> sim = std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
 	Experiment exp(sim);
 	
 	exp.runall(10);

@@ -57,6 +57,11 @@ class Generation
 		 */
 		 bool compare(std::string s1, std::string s2);
 		 
+		 /** This function sorts the alleles given by the file and calculates
+		  * their frequencies. 
+		  * //a completer(remarque au groupe)
+		  * @param all : the vector of string to sort to find all the possibly alleles
+		  */
 		 void sort(std::vector<std::string> all);
 
 

@@ -1,4 +1,3 @@
-
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
@@ -59,6 +58,8 @@ class Simulation
 		/**	Function creating a new generation with the use of random devices and a binomial distribution. */
 		void createNewGeneration();
 		
+		/** Function writing in the terminal the sequences and the frequencies of all alleles
+		 */
 		void printTerminal();
 
 };
