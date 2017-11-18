@@ -6,15 +6,15 @@ Allele::Allele(std::string sequence, double frequency)
 Allele::~Allele(){}
     
 
-std::string Allele::getSequence(){
+std::string Allele::getSequence() const{
 	return sequence_;
 }
 
-double Allele::getFrequency(){
+double Allele::getFrequency() const{
 	return frequency_;
 } 
 
-void Allele::setFrequency(double freq) {
+void Allele::setFrequency(double const& freq) {
 	frequency_ = freq;
 }
 
