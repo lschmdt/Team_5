@@ -28,7 +28,7 @@ Simulation::~Simulation()
  }
  evolution_pop_.clear();
 }
-std::vector<Generation*> Simulation::getEvolutionPop(){
+std::vector<Generation*> Simulation::getEvolutionPop() const{
 	return evolution_pop_;
 }
 
@@ -98,7 +98,7 @@ void Simulation::createNewGeneration() {
 }
 
 
-void Simulation::printTerminal() {
+void Simulation::printTerminal() const {
 	for (auto gen : getEvolutionPop()) {
 		for (auto all : gen->getAlleles()) {
 			std::cout << "séquence de l'allèle : "<< all->getSequence() << " fréquence : " << all->getFrequency() << std::endl;
