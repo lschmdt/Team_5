@@ -43,19 +43,19 @@ class Generation
 		
 		/**getter of all types of Alleles
 		 */
-		std::vector<Allele*> getAlleles();
+		std::vector<Allele*> getAlleles() const;
 		
-		int getNbIndividuals();
+		int getNbIndividuals() const;
 		
 		void allelesPushBack(Allele*);
 		
-		void setAlleleFrequency(int i, double frequency);
+		void setAlleleFrequency(int const& i, double const& frequency);
 		
-		void setGenerationLength(int i);
+		void setGenerationLength(int const& i);
 		
 		/** \fn compare
 		 */
-		 bool compare(std::string s1, std::string s2);
+		 bool compare(std::string s1, std::string s2) const;
 		 
 		 /** This function sorts the alleles given by the file and calculates
 		  * their frequencies. 
