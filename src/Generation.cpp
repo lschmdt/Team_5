@@ -38,7 +38,7 @@ void Generation::setGenerationLength(int const& i) {
 }
 
 /*
-bool Generation::compare(std::string s1, std::string s2) {
+bool Generation::compare(std::string s1, std::string s2) const{
 	return s1==s2;
 }
 */
