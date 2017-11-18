@@ -47,7 +47,7 @@ class Simulation
 		
 		/**	Getter of overall population
 		*	@return vector<Generation*>: Overall population.	*/
-		std::vector<Generation*> getEvolutionPop();
+		std::vector<Generation*> getEvolutionPop() const;
 		
 		/**	Function reading and defining alleles from a certain file.
 		*	@return vector<string>: Vector of allele sequences retrieved from the file.
@@ -60,7 +60,7 @@ class Simulation
 		
 		/** Function writing in the terminal the sequences and the frequencies of all alleles
 		 */
-		void printTerminal();
+		void printTerminal() const;
 
 };
 
