@@ -1,6 +1,7 @@
 #include "Experiment.hpp"
 #include <cassert>
 #include <vector>
+#include <iomanip>
 
 
 Experiment::Experiment(vector<Simulation*> sim)
@@ -39,10 +40,15 @@ void Experiment::writeFrequencies(ofstream& Output, Simulation* sim){
 		vector<Allele*> alleles=vector<Allele*>(sim->getEvolutionPop().back()->getAlleles());	//Recovery of overall allele vector simplifies code
 
 		for(size_t i(0);i<alleles.size();++i)
-		{	Output<<alleles[i]->getFrequency();
+		{	double freq(alleles[i]->getFrequency());
+			Output<<setprecision(4)<<freq;
+			if(freq==0 or freq==1)
+			{ 	Output<<"\t";
+			}
 			if(i!=alleles.size()-1)
 			{	Output<<"|";
 			}
+	
 		}
     Output<<"\t";
 }
