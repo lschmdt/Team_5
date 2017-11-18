@@ -32,16 +32,16 @@ class Experiment
 	/**	Public function updating all simulations contained in the overall experiment
 	 * 	simultaneously for a given number of time steps.
 	 * 	@param time: Time during which the simulation will run. 	*/
-	void runall(size_t time);
+	void runall(size_t const& time);
 	
 	/**	A public function writing allele frequencies in an external file.
 	* @param ofstream: External file.
 	* @param Simulation*: Simulation wanting to be written in an external file.	*/
-	void writeFrequencies(std::ofstream& Output, Simulation* sim);
+	void writeFrequencies(std::ofstream& Output, Simulation* sim) const;
 	
 	/**	A public function writing allele genotypes in a file.
 	* 	@param ofstream: External file.	*/
-	void writeGenotypes(std::ofstream& Output);
+	void writeGenotypes(std::ofstream& Output) const;
 	
 	
 	
