@@ -36,15 +36,15 @@ class Allele
 		 
 		/**	Getter of the allele's sequence.
 		*	@return string: Allele sequence.	*/
-		 std::string getSequence();
+		 std::string getSequence() const;
 		
 		/**	Getter of the allele's frequency.
 		*	@return double: Allele frequency.	*/
-		 double getFrequency();
+		 double getFrequency() const;
 		 
 		/**	Setter of the allele's frequency.
 		*	@param freq: New frequency of the given allele.	*/
-		 void setFrequency(double freq);
+		 void setFrequency(double const& freq);
 
 };
 
