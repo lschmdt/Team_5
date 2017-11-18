@@ -16,11 +16,11 @@ Generation::~Generation(){}
 	
 void Generation::update(){}
 
-std::vector<Allele*> Generation::getAlleles(){
+std::vector<Allele*> Generation::getAlleles() const{
 	return alleles_;
 }
 
-int Generation::getNbIndividuals() {
+int Generation::getNbIndividuals() const {
 	return nb_individuals_;
 }
 
@@ -33,7 +33,7 @@ void Generation::allelesPushBack(Allele* allele) {
 	alleles_[i]->(setFrequency(frequency));
 }*/
 
-void Generation::setGenerationLength(int i) {
+void Generation::setGenerationLength(int const& i) {
 	nb_individuals_ = i;
 }
 
