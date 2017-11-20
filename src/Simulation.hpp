@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <vector>
-//#include "Generation.cpp"
 #include "Generation.hpp"
 #include "Allele.hpp"
 #include <fstream>
