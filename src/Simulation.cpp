@@ -64,7 +64,7 @@ void Simulation::createNewGeneration() {
 	static mt19937 gen(rd());
 	Generation* nextGen (new Generation());
 	
-	Generation* lastGen (evolution_pop_[evolution_pop_.size()-1]);
+	Generation* lastGen (evolution_pop_.back());
 	int sampleSize (lastGen->getNbIndividuals());
 	int sampleResidue(lastGen->getNbIndividuals());
 	double proba (0);
@@ -81,9 +81,10 @@ void Simulation::createNewGeneration() {
 			if (i == lastGen->getAlleles().size()-1) {
 				a = sampleSize;											//dernier allèle qui complète
 			}
-			if (!(i > lastGen->getAlleles().size())){
-				nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), a/double(lastGen->getNbIndividuals())));
-			}
+			/*
+			if (!(i > lastGen->getAlleles().size())){*/
+			nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), a/double(lastGen->getNbIndividuals())));
+			//}
 			if (sampleSize <= 0) {
 				for (size_t j(i+1); j <  lastGen->getAlleles().size(); ++j) {
 					nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), 0));
