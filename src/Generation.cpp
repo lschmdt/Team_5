@@ -6,7 +6,7 @@ using namespace std;
 
 Generation::Generation(){}
 
-Generation::Generation(std::vector<std::string> list) {
+Generation::Generation(vector<string> list) {
 	assert (list.size() > 0);
 	sort(list);
 	nb_individuals_ = list.size();
@@ -39,35 +39,12 @@ void Generation::setGenerationLength(int const& i) {
 }
 
 /*
-bool Generation::compare(std::string s1, std::string s2) const{
+bool Generation::compare(string s1, string s2) const{
 	return s1==s2;
 }
 */
 
-void Generation::sort(std::vector<std::string> all){ 
-	/*std::map<std::string, int> sort; 
-	if (alleles_.size() == 0) { 
-		sort[all[0]] = 1;
-	}
-	for (auto allele: all) { 
-		std::map<std::string, int> n(sort); 
-		for (auto elm : n) {
-			if (compare(elm.first, allele)){ 
-				++elm.second;
-			} else {
-				sort[elm.first] = 1;
-			}
-		}
-	}
-	for(auto elm : sort) {
-		cout << elm.first << " " << elm.second << endl;
-		alleles_.push_back(new Allele(elm.first, elm.second/double(all.size())));
-	}
-	
-	cout << "fin" << endl;
-	
-	//____________________________________
-	*/
+void Generation::sort(vector<string> all){ 
 	bool different (true);
 	for (size_t i (0); i < all.size(); ++i) {
 		for (size_t j(0); j < i ; ++j) {
