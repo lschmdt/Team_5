@@ -10,7 +10,7 @@ Simulation::Simulation(Generation* firstGen){
   	gen=mt19937(rd());
 	evolution_pop_.push_back(firstGen);
 }
-Simulation::Simulation(std::vector<int> marker_positions)
+Simulation::Simulation(vector<int> marker_positions)
 {
     input_file_.open("../res/test.fa");
     assert(!input_file_.fail());
@@ -33,7 +33,7 @@ std::vector<Generation*> Simulation::getEvolutionPop() const{
 }
 
 
-vector<string> Simulation::readFromFile(vector<int> NuclPositions, std::ifstream& inputFile)
+vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inputFile)
 {
 	vector<string> nuclMarkerSite; 
 	string line;
@@ -59,8 +59,8 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, std::ifstream
 
 
 void Simulation::createNewGeneration() {
-	static std::random_device rd;
-	static std::mt19937 gen(rd());
+	static random_device rd;
+	static mt19937 gen(rd());
 	Generation* nextGen (new Generation());
 	
 	Generation* lastGen (evolution_pop_[evolution_pop_.size()-1]);
@@ -72,7 +72,7 @@ void Simulation::createNewGeneration() {
 			assert(lastGen->getAlleles()[i]->getFrequency() >= 0.0);
 			assert(lastGen->getAlleles()[i]->getFrequency() <= 1.0);
 			proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
-			std::binomial_distribution<> bin_dis (sampleSize, proba);
+			binomial_distribution<> bin_dis (sampleSize, proba);
 			int a(bin_dis(gen));
 			
 			sampleResidue -= lastGen->getAlleles()[i]->getFrequency() * lastGen->getNbIndividuals();
@@ -101,7 +101,7 @@ void Simulation::createNewGeneration() {
 void Simulation::printTerminal() const {
 	for (auto gen : getEvolutionPop()) {
 		for (auto all : gen->getAlleles()) {
-			std::cout << "séquence de l'allèle : "<< all->getSequence() << " fréquence : " << all->getFrequency() << std::endl;
+			cout << "séquence de l'allèle : "<< all->getSequence() << " fréquence : " << all->getFrequency() << std::endl;
 		}
 	}
 }
