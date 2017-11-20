@@ -12,27 +12,35 @@ int main( int argc, char **argv ) {
 	
 	std::vector<int> markers;
 	
-	CmdLine cmd( "Ask the marker site to the user" );
+	try{
+		CmdLine cmd( "Ask the marker site to the user" );
 
-	MultiArg< double > numbers( "n", "numbers", "Give me some numbers", false, "double" ); 
-	cmd.add(numbers);
-	cmd.parse(argc,argv);
-	for (auto n : numbers.getValue()) {markers.push_back(n);}
+		MultiArg< int > markersPositions( "m", "markers", "Give me the markers positions", false, "int" ); 
+		cmd.add(markersPositions);
+		cmd.parse(argc,argv);
+		for (auto n : markersPositions.getValue()) {markers.push_back(n);}
+	} catch(TCLAP::ArgException &e) {std::cerr << "ERROR: " << e.error() << " for arg " << e.argId() << std::endl;}
 	
-	Simulation S(markers);
-	S.printTerminal();
-	std::cout << "tout va mal" << std::endl;
-	for (int i(0); i < 6 ; ++i) {
-		S.createNewGeneration();
-	}
-	S.printTerminal();
 	
+	try{
+		Simulation S(markers);
+		 
+		S.printTerminal();
+		for (int i(0); i < 6 ; ++i) {
+			S.createNewGeneration();
+		}
+		S.printTerminal();
 		
-	std::vector<Simulation*> sim = std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
-	Experiment exp(sim);
+			
+		std::vector<Simulation*> sim=std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
+		Experiment exp(sim);
+		
+		exp.runall(10);
 	
-	exp.runall(10);
-
+	} catch(string& e){
+		std::cerr << e << std::endl;
+		return 1;
+		}
 	
 	return 0;
 }

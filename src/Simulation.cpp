@@ -44,6 +44,7 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inp
 			
 			if (line[0]== '>'){ continue; }								//Ignore les lignes commencant par >
 			for (size_t j(0); j< NuclPositions.size(); ++j){			//Parcours tableau des markers positions
+			if (NuclPositions[j]>=size){ throw string("Markers positions are greater than the sequence in the file");}
 				sequence +=(line[NuclPositions[j]]);					//Ajoute le nucléotide marqué à la séquence
 				}
 			nuclMarkerSite.push_back(sequence);							//Crée la case de l'individu, elle contient la séquence résultante
