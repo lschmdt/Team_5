@@ -26,9 +26,11 @@ void Experiment::runall(size_t const& time)
 {	size_t time_step(0);
 	while(time_step<=time)
 	{	output_file_<<time_step<<"\t";
+		
 		for(auto& sim: simulations_)
 		{	sim->createNewGeneration();
 			writeFrequencies(output_file_, sim);
+			output_file_<<"\t";
 		}
 		++time_step;
 		output_file_<<endl;
@@ -37,35 +39,31 @@ void Experiment::runall(size_t const& time)
 	
 }
 void Experiment::writeFrequencies(ofstream& Output, Simulation* sim) const{
- 
-		vector<Allele*> alleles=vector<Allele*>(sim->getEvolutionPop().back()->getAlleles());	//Recovery of overall allele vector simplifies code
+ 	vector<Allele*> alleles=vector<Allele*>(sim->getEvolutionPop().back()->getAlleles());	//Recovery of overall allele vector simplifies code
 
 		for(size_t i(0);i<alleles.size();++i)
 		{	double freq(alleles[i]->getFrequency());
-			Output<<setprecision(4)<<freq;
-			if(freq==0 or freq==1)
-			{ 	Output<<"\t";
-			}
+			Output<<std::setw(7)<<std::left<<std::setprecision(3)<<freq;
+
+			
 			if(i!=alleles.size()-1)
-			{	Output<<"|";
+			{	Output<<std::setw(2)<<std::left<<"|";
 			}
 	
 		}
-    Output<<"\t";
 }
 void Experiment::writeGenotypes(ofstream& Output) const
-{   Output<<"\t\t";
+{   	Output<<"\t";
 	for(auto const& sim: simulations_)
 	{
 		vector<Allele*> alleles=vector<Allele*>(sim->getEvolutionPop().back()->getAlleles());
 		for(size_t i(0);i<alleles.size();++i)
 		{
-			assert(alleles[i] != nullptr);
-			Output<<alleles[i]->getSequence();
+			Output<<std::setw(7)<<std::left<<alleles[i]->getSequence();
 			if(i!=alleles.size()-1)
-			{	Output<<"|";
+			{	Output<<std::setw(2)<<std::left<<"|";
 			}
 		}
-		Output<<"\t\t";
+		Output<<"\t";
 	}
 }
