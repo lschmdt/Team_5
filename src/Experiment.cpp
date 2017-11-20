@@ -3,6 +3,7 @@
 #include <vector>
 #include <iomanip>
 
+using namespace std;
 
 Experiment::Experiment(vector<Simulation*> sim)
 	:	simulations_(sim)
