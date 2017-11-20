@@ -24,7 +24,7 @@ int main( int argc, char **argv ) {
 	
 	try{
 		Simulation S(markers);
-		 
+
 		S.printTerminal();
 		for (int i(0); i < 6 ; ++i) {
 			S.createNewGeneration();
@@ -37,7 +37,7 @@ int main( int argc, char **argv ) {
 		
 		exp.runall(10);
 	
-	} catch(string& e){
+	} catch(std::string& e){
 		std::cerr << e << std::endl;
 		return 1;
 		}

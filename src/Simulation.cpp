@@ -41,7 +41,7 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inp
 	if (inputFile.is_open()){
 		
 		while (getline(inputFile, line)){								//Parcours chaque ligne du fichier
-			
+			int size(line.size());
 			if (line[0]== '>'){ continue; }								//Ignore les lignes commencant par >
 			for (size_t j(0); j< NuclPositions.size(); ++j){			//Parcours tableau des markers positions
 			if (NuclPositions[j]>=size){ throw string("Markers positions are greater than the sequence in the file");}
