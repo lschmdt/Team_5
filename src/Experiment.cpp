@@ -59,6 +59,7 @@ void Experiment::writeGenotypes(ofstream& Output) const
 		vector<Allele*> alleles=vector<Allele*>(sim->getEvolutionPop().back()->getAlleles());
 		for(size_t i(0);i<alleles.size();++i)
 		{
+			assert(alleles[i] != nullptr);
 			Output<<alleles[i]->getSequence();
 			if(i!=alleles.size()-1)
 			{	Output<<"|";
