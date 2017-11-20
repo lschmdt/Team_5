@@ -25,6 +25,7 @@ int Generation::getNbIndividuals() const {
 }
 
 void Generation::allelesPushBack(Allele* allele) {
+	assert(allele != nullptr);
 	alleles_.push_back(allele);
 }
 		
