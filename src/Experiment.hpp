@@ -5,7 +5,6 @@
 #include <fstream>
 #include <memory>
 
-using namespace std;
 
 /*! \class Experiment
  * 	Represents an overall number of simulations that will run simultaneously.
@@ -16,15 +15,15 @@ class Experiment
 {	
 	private:
 	
-	vector<Simulation*> simulations_;	/**<	All simulations contained in the experiment.	*/
+	std::vector<Simulation*> simulations_;	/**<	All simulations contained in the experiment.	*/
 	
-	ofstream output_file_;				/**<	External file where frequencies and genotypes will be written.	*/
+	std::ofstream output_file_;				/**<	External file where frequencies and genotypes will be written.	*/
 	
 	
 	
 	public:
 	/**	Constructor of experiment, initialized with a vector of Simulations.	*/
-	Experiment(vector<Simulation*> sim);
+	Experiment(std::vector<Simulation*> sim);
 	
 	/**	Destructor of Experiment.	*/
 	~Experiment();
@@ -46,8 +45,6 @@ class Experiment
 	
 	
 };
-
-
 
 
 #endif
