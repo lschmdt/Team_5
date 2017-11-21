@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream> 
 #include <random>
+#include <string>
 
 /*! \class Allele
  * 
