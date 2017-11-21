@@ -19,7 +19,7 @@ double Allele::getFitness() const{
 	return fitness_;
 }
 
-std::string Allele::getSequence() const{
+string Allele::getSequence() const{
 	return sequence_;
 }
 
