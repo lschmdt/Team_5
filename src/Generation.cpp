@@ -16,7 +16,7 @@ Generation::~Generation(){}
 	
 void Generation::update(){}
 
-std::vector<Allele*> Generation::getAlleles() const{
+vector<Allele*> Generation::getAlleles() const{
 	return alleles_;
 }
 
