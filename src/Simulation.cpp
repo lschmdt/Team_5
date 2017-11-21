@@ -60,8 +60,6 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inp
 
 
 void Simulation::createNewGeneration() {
-	static random_device rd;
-	static mt19937 gen(rd());
 	Generation* nextGen (new Generation());
 	
 	Generation* lastGen (evolution_pop_.back());
@@ -84,6 +82,9 @@ void Simulation::createNewGeneration() {
 			/*
 			if (!(i > lastGen->getAlleles().size())){*/
 			nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), a/double(lastGen->getNbIndividuals())));
+			/*for(auto allele: nextGen->getAlleles()) 		// Testing the variety of fitness generated per allele
+			{	cout<<allele-> getFitness()<<endl;
+			}*/
 			//}
 			if (sampleSize <= 0) {
 				for (size_t j(i+1); j <  lastGen->getAlleles().size(); ++j) {
