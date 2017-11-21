@@ -27,7 +27,7 @@ class Simulation
         std::ifstream input_file_;  /**<	Opening of the file the simulation will read from.	*/
         std::mt19937 gen;							/**<	Device useful to generate random numbers for the creation of generations.	*/
 	
-	bool allow_selection_;
+	bool allow_selection_; /**< defines whether the extension "Selection" is used or not 
 	
 	public: 
 	
