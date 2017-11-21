@@ -27,6 +27,8 @@ class Simulation
         std::ifstream input_file_;  /**<	Opening of the file the simulation will read from.	*/
         std::mt19937 gen;							/**<	Device useful to generate random numbers for the creation of generations.	*/
 	
+	bool allow_selection_;
+	
 	public: 
 	
 		/** \fn Simulation constructor 
@@ -34,8 +36,9 @@ class Simulation
 		 * */ 
 	Simulation(Generation* firstGen); 
         /** Simulation constructor defining the generation by
-               given marker positions. */
-        Simulation(std::vector<int> marker_positions);
+               given marker positions.
+	       additional parameter: use of the extension "Selection" */
+        Simulation(std::vector<int> marker_positions, bool allow_selection = false);
 		/** Simulation destructor 
 		 * 
 		 * defined by default  
