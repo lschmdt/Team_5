@@ -10,13 +10,15 @@ Simulation::Simulation(Generation* firstGen){
   	gen=mt19937(rd());
 	evolution_pop_.push_back(firstGen);
 }
-Simulation::Simulation(vector<int> marker_positions)
+Simulation::Simulation(vector<int> marker_positions, bool allow_selection)
 {
     input_file_.open("../res/test.fa");
     assert(!input_file_.fail());
     random_device rd;
     gen=mt19937(rd());
-
+    
+    allow_selection_ = allow_selection;
+	
     evolution_pop_.push_back(new Generation(readFromFile(marker_positions, input_file_)));
 }
 Simulation::~Simulation()
@@ -66,11 +68,22 @@ void Simulation::createNewGeneration() {
 	int sampleSize (lastGen->getNbIndividuals());
 	int sampleResidue(lastGen->getNbIndividuals());
 	double proba (0);
+	double sumCoef(0);
+	for (auto allele : lastGen->getAlleles())  {
+		if (allele != nullptr) {
+			sumCoef += allele->getFrequency()*allele->getFitness();
+		}
+	}
+	
 	for (size_t i(0); i < lastGen->getAlleles().size(); ++i) {
 		if (lastGen != nullptr) {
 			assert(lastGen->getAlleles()[i]->getFrequency() >= 0.0);
 			assert(lastGen->getAlleles()[i]->getFrequency() <= 1.0);
-			proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
+			if (allow_selection_) {
+				proba = lastGen->getAlleles()[i]->getFrequency()*(1+lastGen->getAlleles()[i]->getFitness )/ (1+ sumCoef);
+			} else { 
+				proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
+			}
 			binomial_distribution<> bin_dis (sampleSize, proba);
 			int a(bin_dis(gen));
 			
