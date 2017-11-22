@@ -94,7 +94,7 @@ void Simulation::createNewGeneration() {
 			}
 			/*
 			if (!(i > lastGen->getAlleles().size())){*/
-			nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), a/double(lastGen->getNbIndividuals())));
+			nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), a/double(lastGen->getNbIndividuals()), lastGen->getAlleles()[i]->getFitness() ));
 			/*for(auto allele: nextGen->getAlleles()) 		// Testing the variety of fitness generated per allele
 			{	cout<<allele-> getFitness()<<endl;
 			}*/
