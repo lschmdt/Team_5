@@ -28,17 +28,24 @@ class Simulation
         std::mt19937 gen;							/**<	Device useful to generate random numbers for the creation of generations.	*/
 	
 	bool allow_selection_; /**< defines whether the extension "Selection" is used or not */
+	bool allow_size_modification_; /**< defines whether the extension "Time-dependency" is used or not */
 		
 	public: 
 	
 		/** \fn Simulation constructor 
 		 *
 		 * */ 
-	Simulation(Generation* firstGen); 
+		Simulation(Generation* firstGen); 
+		
         /** Simulation constructor defining the generation by
                given marker positions.
 	       additional parameter: use of the extension "Selection" */
-        Simulation(std::vector<int> marker_positions, bool allow_selection = false);
+        Simulation( std::vector<int> marker_positions, 
+					bool allow_selection = false, 
+					bool allow_size_modification = false);
+        
+        Simulation(std::vector<double> frequencies);
+        
 		/** Simulation destructor 
 		 * 
 		 * defined by default  

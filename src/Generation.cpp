@@ -1,10 +1,23 @@
 #include "Generation.hpp"
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
 Generation::Generation(){}
+
+Generation::Generation(vector<double> frequencies){
+	for(size_t i(0); i<frequencies.size(); ++i){
+		allelesPushBack(new Allele(intToString(i), frequencies[i]));
+	}
+}
+
+string intToString(int i){
+	ostringstream oss;
+	oss << i;
+	return oss.str();
+}
 
 Generation::Generation(vector<string> list) {
 	assert (list.size() > 0);
@@ -62,5 +75,16 @@ void Generation::sort(vector<string> all){
 			alleles_.push_back(new Allele(all[i], compteur/double(all.size())));
 		}
 		different = true;
+	}
+}
+
+void Generation::sizeEvolution(){
+	std::bernoulli_distribution dist(0.4);
+	std::uniform_int_distribution<> nbIndividus(nb_individuals_ - nb_individuals_/2, nb_individuals_ + nb_individuals_/2);
+
+	if(dist(gen)){
+		cout << "I'm here" << endl;
+		setGenerationLength(nbIndividus(gen));
+		cout << "individus : " << nb_individuals_ <<endl;
 	}
 }

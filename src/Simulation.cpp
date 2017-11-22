@@ -10,17 +10,24 @@ Simulation::Simulation(Generation* firstGen){
   	gen=mt19937(rd());
 	evolution_pop_.push_back(firstGen);
 }
-Simulation::Simulation(vector<int> marker_positions, bool allow_selection)
+
+Simulation::Simulation(vector<int> marker_positions, bool allow_selection, bool allow_size_modification)
 {
-    input_file_.open("../res/test.fa");
+    input_file_.open("../res/mitogenes.fa");
     assert(!input_file_.fail());
     random_device rd;
     gen=mt19937(rd());
     
     allow_selection_ = allow_selection;
+    allow_size_modification_ = allow_size_modification;
 	
     evolution_pop_.push_back(new Generation(readFromFile(marker_positions, input_file_)));
 }
+
+Simulation::Simulation(vector<double> frequencies){
+	evolution_pop_.push_back(new Generation(frequencies));
+}
+
 Simulation::~Simulation()
 {	input_file_.close();
   
@@ -62,8 +69,9 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inp
 
 
 void Simulation::createNewGeneration() {
-	Generation* nextGen (new Generation());
 	
+	Generation* nextGen (new Generation());
+
 	Generation* lastGen (evolution_pop_.back());
 	int sampleSize (lastGen->getNbIndividuals());
 	int sampleResidue(lastGen->getNbIndividuals());
@@ -109,8 +117,16 @@ void Simulation::createNewGeneration() {
 			
 		}
 	}
-	nextGen->setGenerationLength(lastGen->getNbIndividuals());
+		
+	if(allow_size_modification_){
+		nextGen->setGenerationLength(lastGen->getNbIndividuals());
+		nextGen->sizeEvolution();
+	}else{
+		nextGen->setGenerationLength(lastGen->getNbIndividuals());
+	}
 	evolution_pop_.push_back(nextGen);
+	
+	cout << nextGen->getNbIndividuals() << endl;
 }
 
 

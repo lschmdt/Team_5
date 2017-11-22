@@ -6,6 +6,7 @@
 #include <string>
 #include <memory>
 #include "Allele.hpp"
+#include <random>
 
 /*! \class Generation
  * 
@@ -21,6 +22,7 @@ class Generation
 	
 		std::vector<Allele*> alleles_;
 		int nb_individuals_;
+		std::mt19937 gen;	
 		
 	public: 
 	
@@ -30,6 +32,8 @@ class Generation
 		Generation(std::vector<std::string> list); 
 		
 		Generation();
+		
+		Generation(std::vector<double> frequencies);
 		
 		/** generation destructor 
 		 * 
@@ -63,8 +67,12 @@ class Generation
 		  * @param all : the vector of string to sort to find all the possibly alleles
 		  */
 		 void sort(std::vector<std::string> all);
+		 
+		 void sizeEvolution();
 
 
 };
+
+std::string intToString(int i);
 
 #endif
