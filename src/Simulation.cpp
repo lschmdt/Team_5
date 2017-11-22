@@ -80,7 +80,7 @@ void Simulation::createNewGeneration() {
 			assert(lastGen->getAlleles()[i]->getFrequency() >= 0.0);
 			assert(lastGen->getAlleles()[i]->getFrequency() <= 1.0);
 			if (allow_selection_) {
-				proba = lastGen->getAlleles()[i]->getFrequency()*(1+lastGen->getAlleles()[i]->getFitness )/ (1+ sumCoef);
+				proba = lastGen->getAlleles()[i]->getFrequency()*(1+lastGen->getAlleles()[i]->getFitness() )/ (1+ sumCoef);
 			} else { 
 				proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
 			}
