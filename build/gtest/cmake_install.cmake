@@ -1,4 +1,4 @@
-# Install script for directory: /home/localguest/Documents/Team_5/gtest
+# Install script for directory: /home/INTRANET/agrisard/myfiles/semester3/genetic/gtest
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

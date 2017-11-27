@@ -19,8 +19,8 @@ int main( int argc, char **argv ) {
 		MultiArg< int > markersPositions( "m", "markers", "Give me the markers positions", false, "int" ); 
 		cmd.add(markersPositions);
 		
-		/*ValueArg<int> nb_alleles("n", "number_alleles", "Give me a number of alleles", false, "int");
-		cmd.add(nb_alleles);*/
+		MultiArg<int> nb_alleles("n", "number_alleles", "Give me a number of alleles", false, "int");
+		cmd.add(nb_alleles);
 	
 		MultiArg<double> frequencies("f", "frequencies", "Give me some frequencies", false, "double");
 		cmd.add(frequencies);
@@ -32,23 +32,43 @@ int main( int argc, char **argv ) {
 		
 	} catch(TCLAP::ArgException &e) {std::cerr << "ERROR: " << e.error() << " for arg " << e.argId() << std::endl;}
 	
+
 	
 	try{
-		Simulation S(markers);
-
-		S.printTerminal();
-		for (int i(0); i < 6 ; ++i) {
-			S.createNewGeneration();
-		}
-		S.printTerminal();
-		
-			
-		std::vector<Simulation*> sim=std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
-		Experiment exp(sim);
-		
-		exp.runall(300);
 	
-	} catch(std::string& e){
+		if (markers.empty())
+		{
+			Simulation S1(freq); 
+			
+			S1.printTerminal();	
+			for (int i(0); i < 6 ; ++i) {
+				S1.createNewGeneration();
+			}
+			S1.printTerminal();
+			std::vector<Simulation*> sim1 = std::vector<Simulation*> {new Simulation(freq), new Simulation(freq), new Simulation(freq)};
+			
+			Experiment exp(sim1);
+			exp.runall(300);
+		} else {
+			Simulation S2(markers);
+			
+			S2.printTerminal();	
+			for (int i(0); i < 6 ; ++i) {
+				S2.createNewGeneration();
+			}
+			S2.printTerminal();
+			
+			std::vector<Simulation*> sim2 = std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};	
+		
+			Experiment exp(sim2);
+			exp.runall(300);
+		}
+
+	} 
+	
+	
+	
+	catch(std::string& e){
 		std::cerr << e << std::endl;
 		return 1;
 		}

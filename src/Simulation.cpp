@@ -13,7 +13,7 @@ Simulation::Simulation(Generation* firstGen){
 
 Simulation::Simulation(vector<int> marker_positions, bool allow_selection, bool allow_size_modification)
 {
-    input_file_.open("../res/mitogenes.fa");
+    input_file_.open("../res/test.fa");
     assert(!input_file_.fail());
     random_device rd;
     gen=mt19937(rd());
