@@ -24,6 +24,7 @@ class Generation
 		int nb_individuals_;
 		std::mt19937 gen;	
 		
+		
 	public: 
 	
 		/** \fn generation constructor 
@@ -55,7 +56,7 @@ class Generation
 		
 		void setAlleleFrequency(int const& i, double const& frequency);
 		
-		void setGenerationLength(int const& i);
+		void setGenerationLength(int i);
 		
 		/** \fn compare
 		 */

@@ -11,6 +11,7 @@ Generation::Generation(vector<double> frequencies){
 	for(size_t i(0); i<frequencies.size(); ++i){
 		allelesPushBack(new Allele(intToString(i), frequencies[i]));
 	}
+	nb_individuals_ = 100;
 }
 
 string intToString(int i){
@@ -47,7 +48,7 @@ void Generation::allelesPushBack(Allele* allele) {
 	alleles_[i]->(setFrequency(frequency));
 }*/
 
-void Generation::setGenerationLength(int const& i) {
+void Generation::setGenerationLength(int i) {
 	nb_individuals_ = i;
 }
 
@@ -79,11 +80,13 @@ void Generation::sort(vector<string> all){
 }
 
 void Generation::sizeEvolution(){
-	std::bernoulli_distribution dist(0.4);
-	std::uniform_int_distribution<> nbIndividus(nb_individuals_ - nb_individuals_/2, nb_individuals_ + nb_individuals_/2);
+	
+	std::default_random_engine generator; 
+	std::bernoulli_distribution dist(0.8);
+	std::uniform_int_distribution<> nbIndividus(/*nb_individuals_ - nb_individuals_/2*/ 0, nb_individuals_+ nb_individuals_/2);
 
-	if(dist(gen)){
-		cout << "I'm here" << endl;
+	if(dist(generator)){
+		//cout << "I'm here" << endl;
 		setGenerationLength(nbIndividus(gen));
 		cout << "individus : " << nb_individuals_ <<endl;
 	}

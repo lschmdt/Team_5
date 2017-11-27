@@ -24,7 +24,10 @@ Simulation::Simulation(vector<int> marker_positions, bool allow_selection, bool 
     evolution_pop_.push_back(new Generation(readFromFile(marker_positions, input_file_)));
 }
 
-Simulation::Simulation(vector<double> frequencies){
+Simulation::Simulation(vector<double> frequencies,bool allow_size_modification)
+	: allow_selection_ (false)
+{
+	allow_size_modification_ = allow_size_modification;
 	evolution_pop_.push_back(new Generation(frequencies));
 }
 
@@ -126,7 +129,7 @@ void Simulation::createNewGeneration() {
 	}
 	evolution_pop_.push_back(nextGen);
 	
-	cout << nextGen->getNbIndividuals() << endl;
+	//cout << nextGen->getNbIndividuals() << endl;
 }
 
 

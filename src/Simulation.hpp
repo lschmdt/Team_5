@@ -44,7 +44,7 @@ class Simulation
 					bool allow_selection = false, 
 					bool allow_size_modification = false);
         
-        Simulation(std::vector<double> frequencies);
+        Simulation(std::vector<double> frequencies, bool allow_size_modification = false);
         
 		/** Simulation destructor 
 		 * 

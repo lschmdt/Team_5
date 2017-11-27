@@ -45,12 +45,13 @@ int main( int argc, char **argv ) {
 				S1.createNewGeneration();
 			}
 			S1.printTerminal();
+			
 			std::vector<Simulation*> sim1 = std::vector<Simulation*> {new Simulation(freq), new Simulation(freq), new Simulation(freq)};
 			
 			Experiment exp(sim1);
 			exp.runall(300);
 		} else {
-			Simulation S2(markers);
+			Simulation S2(markers,false, true);
 			
 			S2.printTerminal();	
 			for (int i(0); i < 6 ; ++i) {
