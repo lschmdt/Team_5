@@ -6,43 +6,117 @@
 
 using namespace std;
 
-Generation::Generation(bool mutate, vector<double> mus)
-	: mus_(mus)
+vector<double> Generation::mus_ = {};
+//double Generation::delta_ = 1/3.;
+Model Generation::model_ = Nothing;
+vector<double> Generation::deltaOrPis_ = {};
+
+
+
+Generation::Generation(bool mutate, vector<double> mus, Model model, vector<double> deltaOrPis)
+	//: mus_(mus)
 {
+	//for (size_t i(0); i < mus_.size(); ++i){}
+	if (!mus.empty() and mus_.empty()) {
+		mus_ = mus;
+	}
+	if (model_ == Nothing and model != Nothing){
+		model_ = model;
+	}
+	if (!deltaOrPis.empty() and deltaOrPis_.empty()) {
+		cout << "salut" << endl;
+		deltaOrPis_ = deltaOrPis;
+		if (deltaOrPis_.size() == 3) {
+			double piT(1);
+			for (size_t j (0); j < deltaOrPis_.size(); ++j) {
+				piT -= deltaOrPis_[j];
+			} 
+			deltaOrPis_.push_back(piT);
+			for (size_t j (0); j < deltaOrPis_.size(); ++j) {
+				cout << "pi : " <<deltaOrPis_[j] << endl;
+			}
+			
+		}
+	}
+	
+		
 	/*if (mus.empty()){ 
 		initialiseMus();
 		cout << "initialisemus()" << endl;
 	}*/
 }
 
-Generation::Generation(vector<string> list, vector<double> mus) 
-	 : mus_(mus)
+Generation::Generation(vector<string> list, vector<double> mus, Model model, vector<double> deltaOrPis) 
+	// : mus_(mus)
 {
 	//cout << "Constructeur list" << endl;
 
 	assert (list.size() > 0);
 	sort(list);
 	nb_individuals_ = list.size();
-	if (mus.empty()){ 
+	
+	if (!mus.empty() and mus_.empty()) {
+		mus_ = mus;
+	}
+	if (model_ == Nothing and model != Nothing){
+		model_ = model;
+	}
+	if (!deltaOrPis.empty() and deltaOrPis_.empty()) {
+		cout << "salut" << endl;
+		deltaOrPis_ = deltaOrPis;
+		if (deltaOrPis_.size() == 3) {
+			double piT(1);
+			for (size_t j (0); j < deltaOrPis_.size(); ++j) {
+				piT -= deltaOrPis_[j];
+			} 
+			deltaOrPis_.push_back(piT);
+			for (size_t j (0); j < deltaOrPis_.size(); ++j) {
+				cout << "pi : " <<deltaOrPis_[j] << endl;
+			}
+			
+		}
+	}
+	/*if (mus.empty()){ 
 		initialiseMus();
 		//cout << "initialisemus()" << endl;
-	}
+	}*/
 	/*for (auto mu:mus_) {
 		cout << mu << endl;}*/
 
 }
 
-Generation::Generation(vector<double> frequencies, vector<double> mus)
-	 : mus_(mus)
+Generation::Generation(vector<double> frequencies, vector<double> mus, Model model, vector<double> deltaOrPis)
+	 //: mus_(mus)
 {
 	
 	for(size_t i(0); i<frequencies.size(); ++i){
 		allelesPushBack(new Allele(intToString(i), frequencies[i]));
 	}
 	nb_individuals_ = 100;
-	if (mus.empty()){ 
-		initialiseMus();
+	
+	if (!mus.empty() and mus_.empty()) {
+		mus_ = mus;
 	}
+	if (model_ == Nothing and model != Nothing){
+		model_ = model;
+	}
+	if (!deltaOrPis.empty() and deltaOrPis_.empty()) {
+		cout << "salut" << endl;
+		deltaOrPis_ = deltaOrPis;
+		if (deltaOrPis_.size() == 3) {
+			double piT(1);
+			for (size_t j (0); j < deltaOrPis_.size(); ++j) {
+				piT -= deltaOrPis_[j];
+			} 
+			deltaOrPis_.push_back(piT);
+			for (size_t j (0); j < deltaOrPis_.size(); ++j) {
+				cout << "pi : " <<deltaOrPis_[j] << endl;
+			}
+		}
+	}
+	/*if (mus.empty()){ 
+		initialiseMus();
+	}*/
 	
 		/*for (auto mu:mus_) {
 		cout << "Constructeur frequencies" << endl;
@@ -150,7 +224,7 @@ void Generation::mute(){
 					double mu (mus_[i]);
 					assert(i<=alleles_[w]->getSequence().size());
 					//cout << "mu du site i :" << mu<< endl;
-					if (model == JukesKantor) {
+					if (model_ == JukesKantor) {
 						double proba(1/3. * mu);
 						binomial_distribution<>binDis(int(alleles_[w]->getFrequency()*nb_individuals_),proba);
 						if (alleles_[w]->getNucleotide(i) == A) {
@@ -170,11 +244,11 @@ void Generation::mute(){
 							mutate(alleles_[w], i, C, binDis(gen));
 							mutate(alleles_[w], i, G, binDis(gen));
 						}
-					} else if (model == Kimura) {
-						double proba1(delta_ * mu);
+					} else if (model_ == Kimura) {
+						double proba1(deltaOrPis_[0] * mu);
 						binomial_distribution<>binDis1(int(alleles_[w]->getFrequency()*nb_individuals_),proba1);
 						
-						double proba2((1-delta_)/2 * mu);
+						double proba2((1-deltaOrPis_[0])/2 * mu);
 						binomial_distribution<>binDis2(int(alleles_[w]->getFrequency()*nb_individuals_),proba2);
 						
 						if (alleles_[w]->getNucleotide(i) == A) {
@@ -194,27 +268,27 @@ void Generation::mute(){
 							mutate(alleles_[w], i, C, binDis2(gen));
 							mutate(alleles_[w], i, G, binDis1(gen));
 						}
-					} else if (model == Felsenstein) {
+					} else if (model_ == Felsenstein) {
 						if (alleles_[w]->getNucleotide(i) == A) {
-							double probaA(piA/(1-piA) * mu);
+							double probaA(deltaOrPis_[0]/(1-deltaOrPis_[0]) * mu);
 							binomial_distribution<>binDis(int(alleles_[w]->getFrequency()*nb_individuals_),probaA);
 							mutate(alleles_[w], i, C, binDis(gen));
 							mutate(alleles_[w], i, G, binDis(gen));
 							mutate(alleles_[w], i, T, binDis(gen));
 						} else if (alleles_[w]->getNucleotide(i) == C) {
-							double probaC(piC/(1-piC) * mu);
+							double probaC(deltaOrPis_[1]/(1-deltaOrPis_[1]) * mu);
 							binomial_distribution<>binDis(int(alleles_[w]->getFrequency()*nb_individuals_),probaC);
 							mutate(alleles_[w], i, A, binDis(gen));
 							mutate(alleles_[w], i, G, binDis(gen));
 							mutate(alleles_[w], i, T, binDis(gen));
 						} else if (alleles_[w]->getNucleotide(i) == G) {
-							double probaG(piG/(1-piG) * mu);
+							double probaG(deltaOrPis_[2]/(1-deltaOrPis_[2]) * mu);
 							binomial_distribution<>binDis(int(alleles_[w]->getFrequency()*nb_individuals_),probaG);
 							mutate(alleles_[w], i, A, binDis(gen));
 							mutate(alleles_[w], i, C, binDis(gen));
 							mutate(alleles_[w], i, T, binDis(gen));
 						} else if (alleles_[w]->getNucleotide(i) == T) {
-							double probaT(piT/(1-piT) * mu);
+							double probaT(deltaOrPis_[3]/(1-deltaOrPis_[3]) * mu);
 							binomial_distribution<>binDis(int(alleles_[w]->getFrequency()*nb_individuals_),probaT);
 							mutate(alleles_[w], i, A, binDis(gen));
 							mutate(alleles_[w], i, C, binDis(gen));
@@ -290,6 +364,19 @@ void Generation::mutate(Allele* allele,  int position, Nucleotide M, int nbToMod
 
 
 
+void Generation::initialiseMus() {
+
+	assert(getAlleles()[0] != nullptr);
+
+	for (size_t i(0); i < getAlleles()[0]->getSequence().size() ; ++i) {
+		static std::random_device rd;									
+		static std::mt19937 gen(rd());
+		static std::uniform_real_distribution<> disMu (0.4, 0.8);
+		mus_.push_back(disMu(gen));
+	}
+}
+
+
 
 /*
 void Generation::mutate(Allele* allele,  int position, Nucleotide M, int nbToModify){
@@ -350,17 +437,6 @@ void Generation::mutate(Allele* allele,  int position, Nucleotide M, int nbToMod
 	}
 }*/
 
-void Generation::initialiseMus() {
-
-	assert(getAlleles()[0] != nullptr);
-
-	for (size_t i(0); i < getAlleles()[0]->getSequence().size() ; ++i) {
-		static std::random_device rd;									
-		static std::mt19937 gen(rd());
-		static std::uniform_real_distribution<> disMu (0.4, 0.8);
-		mus_.push_back(disMu(gen));
-	}
-}
 
 vector<double> Generation::getMus() {
 	return mus_;

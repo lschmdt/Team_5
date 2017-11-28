@@ -7,15 +7,16 @@
 #include <memory>
 #include "Allele.hpp"
 #include <random>
+#include <array>
 
-enum Model {JukesKantor, Kimura, Felsenstein};
+enum Model {JukesKantor, Kimura, Felsenstein, Nothing};
 
-const double delta_ (0.5);
+/*const double delta_ (0.5);
 const double piA(0.1);
 const double piC(0.3);
 const double piG(0.4);
 const double piT(1-piA-piC-piG);
-const Model model (Felsenstein);
+const Model model (Felsenstein);*/
 
 
 
@@ -34,7 +35,11 @@ class Generation
 		std::vector<Allele*> alleles_;
 		int nb_individuals_;
 		std::mt19937 gen;
-		std::vector<double> mus_;
+		static std::vector<double> mus_;
+		//static double delta_;
+		static Model model_;
+		static std::vector<double> deltaOrPis_;
+		
 
 		
 	public: 
@@ -42,12 +47,12 @@ class Generation
 		/** \fn generation constructors 
 		 *
 		 * */ 
-		Generation(bool mutate, std::vector<double> mus = {});
+		Generation(bool mutate, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {});
 
-		Generation(std::vector<std::string> list, std::vector<double> mus = {}); 
+		Generation(std::vector<std::string> list, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {}); 
 		
 		
-		Generation(std::vector<double> frequencies, std::vector<double> mus = {});
+		Generation(std::vector<double> frequencies, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {});
 		
 
 		
