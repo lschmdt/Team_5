@@ -8,6 +8,17 @@
 #include "Allele.hpp"
 #include <random>
 
+enum Model {JukesKantor, Kimura, Felsenstein};
+
+const double delta_ (0.5);
+const double piA(0.1);
+const double piC(0.3);
+const double piG(0.4);
+const double piT(1-piA-piC-piG);
+const Model model (Felsenstein);
+
+
+
 /*! \class Generation
  * 
  * represents the state of all the alleles (at this point just the 
@@ -31,7 +42,7 @@ class Generation
 		/** \fn generation constructors 
 		 *
 		 * */ 
-		Generation(bool mutate= false, std::vector<double> mus = {});
+		Generation(bool mutate, std::vector<double> mus = {});
 
 		Generation(std::vector<std::string> list, std::vector<double> mus = {}); 
 		
@@ -75,11 +86,19 @@ class Generation
 		 
 		void mute();
 		void mutate(Allele* allele, int position, Nucleotide M, int nbToModify);
+		void initialiseMus();
 		std::vector<double> getMus();
 		 
 		void sizeEvolution();
-
-
+		
+		/*static double mutationParameter(Model model, Nucleotide ancientNucl = N, Nucleotide newNucl = N);
+		
+		static double jukesKantor();
+		
+		static double kimura(Nucleotide ancientNucl, Nucleotide newNucl);
+		
+		static double felsenstein(Nucleotide ancientNucl, Nucleotide newNucll);*/
+		
 };
 
 std::string intToString(int i);
