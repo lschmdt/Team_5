@@ -7,15 +7,20 @@
 using namespace TCLAP;
 
 
-
 int main( int argc, char **argv ) {
 	
 	
 	std::vector<int> markers;
 	std::vector<double> freq;
+	std::vector<double> mutationParam;
+	std::vector<double> mus;
+	int generation;
+	int replicate ;
+	int pop;
 	bool selection;
 	bool sizeModification;
 	bool mutate;
+	
 	
 	try{
 		CmdLine cmd( "Ask the marker site to the user" );
@@ -29,13 +34,19 @@ int main( int argc, char **argv ) {
 		MultiArg<double> frequencies("f", "frequencies", "Give me some frequencies", false, "double");
 		cmd.add(frequencies);
 		
+		MultiArg<double> mutationParameters("mutParam", "mutation parameters", "Give me the mutations parameters", false, "double");
+		cmd.add(mutationParameters);
+		
+		MultiArg<double> musCoefficientsMutation("mu", "coefficients mus", "Give me the mutation coefficients", false, "double");
+		cmd.add(musCoefficientsMutation);
+		
 		SwitchArg selectionSwitch("selec", "selection", "Active the selection switch", cmd, false);
 		SwitchArg sizeModifSwitch("size", "population size modification", "Active the population size modification switch", cmd, false);
 		SwitchArg mutationSwitch("mutate","mutation", "Active the mutation switch", cmd, false);
 		
         ValueArg<int> generations("g", "generations", "Give me an amount of generations required", false, 1, "int");
         cmd.add(generations);
-        assert(generations.getValue()>=0);
+		assert(generations.getValue()>=0);
 
         ValueArg<int> replicates("r", "replicates", "Give me an amount of replicates wanted", false, 1,"int");
         cmd.add(replicates);
@@ -48,15 +59,19 @@ int main( int argc, char **argv ) {
         
         cmd.parse(argc, argv);
 
-        generation=generations.getValue();
+        generation=(generations.getValue());
         
-        replicate=replicates.getValue();
+        replicate=(replicates.getValue());
         
-        pop=populationsize.getValue();
+        pop=(populationsize.getValue());
 	
 	
 		for (auto f : frequencies.getValue()) {freq.push_back(f);}
 		for (auto n : markersPositions.getValue()) {markers.push_back(n);}
+		for (auto m : mutationParameters.getValue()) {mutationParam.push_back(m);}
+		for (auto m : musCoefficientsMutation.getValue()) {mus.push_back(m);}
+		for (auto m : musCoefficientsMutation.getValue()) {mus.push_back(m);}
+
 		selection=(selectionSwitch.getValue());
 		sizeModification=(sizeModifSwitch.getValue());
 		mutate=(mutationSwitch.getValue());
@@ -98,12 +113,6 @@ int main( int argc, char **argv ) {
 			exp.runall(300);
 		}
 
-	} 
-	
-	  try{
-         
-            
-
         //S.printTerminal();
         /*for (int i(0); i < generations ; ++i) {
             S.createNewGeneration();
@@ -113,7 +122,7 @@ int main( int argc, char **argv ) {
             
         //std::vector<Simulation*> sim=std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
         std::vector<Simulation*> sim;
-        for(size_t i(0);i<replicate;++i)
+        for(int i(0);i<replicate;++i)
         {    if(!markers.empty())
             {    sim.push_back(new Simulation(markers, selection, sizeModification, mutate));
             } else {
@@ -130,7 +139,8 @@ int main( int argc, char **argv ) {
 		return 1;
 		}
 	
-	/*
+	/* MAIN POUR TESTER MUTATION SUR 10 ALLELES ET 50 GENERATIONS
+	 * 
 	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.5, 0.5, 0.5}), false,false, true);
 	std::cout << "Fin construction simulation" << std::endl;
 
