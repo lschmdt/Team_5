@@ -12,7 +12,7 @@ using namespace std;
  */
 TEST (SimulationTest, readFromFile_) 
 {
-	Simulation sim(new Generation());
+	Simulation sim(new Generation(true));
 	ifstream inputFile;
 	//inputFile.open("../test/test/test.fa");
 	inputFile.open("../res/test.fa");
@@ -90,11 +90,109 @@ TEST (SimulationTest, CreateNewGeneration_averageFrequencies_shouldEqual_initial
 }
 
 
-TEST (SimulationTest, MutationTestTotalFrequency) {
 
-	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.5, 0.5, 0.5}), false, false, true);
+
+TEST (SimulationTest, MutationTestDifferentAllelesFelsenstein) {
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.3, 0.4, 0.2}, Felsenstein, {0.1, 0.4, 0.3}), false, false, true);
 	std::cout << "Fin construction simulation" << std::endl;
 	
+	for (int i(0); i < 200 ; ++i) {
+		sim.createNewGeneration();
+	}
+	sim.printTerminal();
+	
+	bool same(false);
+
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {	
+			//std::cout << "COUCOU-----------------------------------------------" << std::endl;
+			//std::cout << i << std::endl;
+
+		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
+			for (size_t k(0); k < sim.getEvolutionPop()[i]->getAlleles().size() ; ++k){
+				if ( j!=k and sim.getEvolutionPop()[i]->getAlleles()[j]->getSequence() == sim.getEvolutionPop()[i]->getAlleles()[k]->getSequence())
+				{ 
+					same = true;
+				}
+			}
+		}
+	}
+	EXPECT_EQ(false, same);
+}
+
+TEST (SimulationTest, MutationTestDifferentAllelesKimura) {
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.1, 0.05, 0.2}, Kimura, {0.7}), false, false, true);
+	std::cout << "Fin construction simulation" << std::endl;
+	
+	for (int i(0); i < 200 ; ++i) {
+		sim.createNewGeneration();
+	}
+	sim.printTerminal();
+	
+	bool same(false);
+
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {	
+			//std::cout << "COUCOU-----------------------------------------------" << std::endl;
+			//std::cout << i << std::endl;
+
+		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
+			for (size_t k(0); k < sim.getEvolutionPop()[i]->getAlleles().size() ; ++k){
+				if ( j!=k and sim.getEvolutionPop()[i]->getAlleles()[j]->getSequence() == sim.getEvolutionPop()[i]->getAlleles()[k]->getSequence())
+				{ 
+					same = true;
+				}
+			}
+		}
+	}
+	EXPECT_EQ(false, same);
+}
+
+TEST (SimulationTest, MutationTestDifferentAllelesJukesKantor) {
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.5, 0.5, 0.5}, JukesKantor), false, false, true);
+	std::cout << "Fin construction simulation" << std::endl;
+	
+	for (int i(0); i < 200 ; ++i) {
+		sim.createNewGeneration();
+	}
+	sim.printTerminal();
+	
+	bool same(false);
+
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {	
+			//std::cout << "COUCOU-----------------------------------------------" << std::endl;
+			//std::cout << i << std::endl;
+
+		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
+			for (size_t k(0); k < sim.getEvolutionPop()[i]->getAlleles().size() ; ++k){
+				if ( j!=k and sim.getEvolutionPop()[i]->getAlleles()[j]->getSequence() == sim.getEvolutionPop()[i]->getAlleles()[k]->getSequence())
+				{ 
+					same = true;
+				}
+			}
+		}
+	}
+	EXPECT_EQ(false, same);
+}
+
+TEST (SimulationTest, MutationTestFrequencySumFelsenstein) {
+	/*cout << "SimulationTest" << endl;
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.5, 0.5, 0.5}), false, true);
+	//std::cout << "Fin construction simulation" << std::endl;
+
+	for (int i(0); i < 50 ; ++i) {
+		sim.createNewGeneration();
+	}
+	//std::cout << "Fin create newGeneration" << std::endl;
+	sim.printTerminal();
+	
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {
+		double sum (0);
+		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
+			sum += sim.getEvolutionPop()[i]->getAlleles()[j]->getFrequency();
+		}
+		EXPECT_NEAR(sum, 1.0, 1e-6);
+	}*/
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.7, 0.8, 0.01}, Felsenstein, {0.1, 0.4, 0.3}), false, false, true);
+	std::cout << "Fin construction simulation" << std::endl;
 
 	for (int i(0); i < 50 ; ++i) {
 		sim.createNewGeneration();
@@ -110,32 +208,47 @@ TEST (SimulationTest, MutationTestTotalFrequency) {
 	}
 }
 
-TEST (SimulationTest, MutationTestDifferentAlleles) {
-	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.5, 0.5, 0.5}), false, false, true);
-	
-	for (int i(0); i < 200 ; ++i) {
+TEST (SimulationTest, MutationTestFrequencySumKimura) {
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.1, 0.1, 0.1}, Kimura, {0.4}), false, false, true);
+	std::cout << "Fin construction simulation" << std::endl;
+
+	for (int i(0); i < 50 ; ++i) {
 		sim.createNewGeneration();
 	}
+	std::cout << "Fin create newGeneration" << std::endl;
 	sim.printTerminal();
-	
-	bool same(false);
-
-	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {	
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {
+		double sum (0.0);
 		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
-			for (size_t k(0); k < sim.getEvolutionPop()[i]->getAlleles().size() ; ++k){
-				if (j != k and sim.getEvolutionPop()[i]->getAlleles()[j]->getSequence() == sim.getEvolutionPop()[i]->getAlleles()[k]->getSequence())
-				{ same = true;
-					}
-			}
+			sum += sim.getEvolutionPop()[i]->getAlleles()[j]->getFrequency();
 		}
+		EXPECT_NEAR(sum, 1.0, 1e-6);
 	}
-	
-	EXPECT_EQ(false, same);
-
 }
+
+
+TEST (SimulationTest, MutationTestFreqenySumJukesKantor) {
+	
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.1, 0.4, 0.8}, JukesKantor), false, false, true);
+	std::cout << "Fin construction simulation" << std::endl;
+
+	for (int i(0); i < 50 ; ++i) {
+		sim.createNewGeneration();
+	}
+	std::cout << "Fin create newGeneration" << std::endl;
+	sim.printTerminal();
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {
+		double sum (0.0);
+		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
+			sum += sim.getEvolutionPop()[i]->getAlleles()[j]->getFrequency();
+		}
+		EXPECT_NEAR(sum, 1.0, 1e-6);
+	}
+}
+
 
 int main(int argc, char **argv) 
 {
-		::testing::InitGoogleTest(&argc, argv);
-		return RUN_ALL_TESTS();
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }
