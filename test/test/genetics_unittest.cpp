@@ -89,6 +89,51 @@ TEST (SimulationTest, CreateNewGeneration_averageFrequencies_shouldEqual_initial
 	EXPECT_NEAR(averageFreq[3], 1/10., 0.02);
 }
 
+
+TEST (SimulationTest, MutationTestTotalFrequency) {
+
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.5, 0.5, 0.5}), false, false, true);
+	std::cout << "Fin construction simulation" << std::endl;
+	
+
+	for (int i(0); i < 50 ; ++i) {
+		sim.createNewGeneration();
+	}
+	std::cout << "Fin create newGeneration" << std::endl;
+	sim.printTerminal();
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {
+		double sum (0.0);
+		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
+			sum += sim.getEvolutionPop()[i]->getAlleles()[j]->getFrequency();
+		}
+		EXPECT_NEAR(sum, 1.0, 1e-6);
+	}
+}
+
+TEST (SimulationTest, MutationTestDifferentAlleles) {
+	Simulation sim(new Generation({"ACC","GCC","CCC","GCC","GCC","GCC","CCC","CCC","GCC","GCC"}, {0.5, 0.5, 0.5}), false, false, true);
+	
+	for (int i(0); i < 200 ; ++i) {
+		sim.createNewGeneration();
+	}
+	sim.printTerminal();
+	
+	bool same(false);
+
+	for (size_t i(0); i < sim.getEvolutionPop().size();  ++i) {	
+		for (size_t j (0); j <  sim.getEvolutionPop()[i]->getAlleles().size(); ++j) {
+			for (size_t k(0); k < sim.getEvolutionPop()[i]->getAlleles().size() ; ++k){
+				if (j != k and sim.getEvolutionPop()[i]->getAlleles()[j]->getSequence() == sim.getEvolutionPop()[i]->getAlleles()[k]->getSequence())
+				{ same = true;
+					}
+			}
+		}
+	}
+	
+	EXPECT_EQ(false, same);
+
+}
+
 int main(int argc, char **argv) 
 {
 		::testing::InitGoogleTest(&argc, argv);
