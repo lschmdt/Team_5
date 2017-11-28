@@ -32,9 +32,28 @@ int main( int argc, char **argv ) {
 		SwitchArg selectionSwitch("selec", "selection", "Active the selection switch", cmd, false);
 		SwitchArg sizeModifSwitch("size", "population size modification", "Active the population size modification switch", cmd, false);
 		SwitchArg mutationSwitch("mutate","mutation", "Active the mutation switch", cmd, false);
-
 		
-		cmd.parse(argc, argv);
+        ValueArg<int> generations("g", "generations", "Give me an amount of generations required", false, 1, "int");
+        cmd.add(generations);
+        assert(generations.getValue()>=0);
+
+        ValueArg<int> replicates("r", "replicates", "Give me an amount of replicates wanted", false, 1,"int");
+        cmd.add(replicates);
+        assert(replicates.getValue()>=0);
+
+        ValueArg<int> populationsize("p", "populationsize", "Give me the size of the population", false, 1, "int");
+        cmd.add(populationsize);
+
+        assert(populationsize.getValue()>=0);
+        
+        cmd.parse(argc, argv);
+
+        generation=generations.getValue();
+        
+        replicate=replicates.getValue();
+        
+        pop=populationsize.getValue();
+	
 	
 		for (auto f : frequencies.getValue()) {freq.push_back(f);}
 		for (auto n : markersPositions.getValue()) {markers.push_back(n);}
@@ -81,7 +100,30 @@ int main( int argc, char **argv ) {
 
 	} 
 	
-	
+	  try{
+         
+            
+
+        //S.printTerminal();
+        /*for (int i(0); i < generations ; ++i) {
+            S.createNewGeneration();
+        }
+        S.printTerminal();*/
+        
+            
+        //std::vector<Simulation*> sim=std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
+        std::vector<Simulation*> sim;
+        for(size_t i(0);i<replicate;++i)
+        {    if(!markers.empty())
+            {    sim.push_back(new Simulation(markers, selection, sizeModification, mutate));
+            } else {
+            sim.push_back(new Simulation(freq, selection, sizeModification, mutate));
+            }
+        }
+        Experiment exp(sim);
+        
+        exp.runall(generation);
+    }
 	
 	catch(std::string& e){
 		std::cerr << e << std::endl;
