@@ -6,6 +6,8 @@
 #include <random>
 #include <string>
 
+enum Nucleotide{A,C,G,T,N};
+
 /*! \class Allele
  * 
  * This class gathers the characteristics of each allele 
@@ -18,7 +20,7 @@ class Allele
 {
 	private: 
 
-		std::string sequence_; 		/**<	Sequence of allele.				*/
+		std::vector<Nucleotide> sequence_; 		/**<	Sequence of allele.				*/
 		double frequency_; 		/**<	Frequency of allele within a generation.	*/
 		double fitness_;		/**<	Fitness coefficient of allele.	*/
 		std::mt19937 generator;
@@ -42,7 +44,12 @@ class Allele
 		double getFitness() const;
 		/**	Getter of the allele's sequence.
 		*	@return string: Allele sequence.	*/
-		 std::string getSequence() const;
+		std::string getSequence() const;
+		 
+		std::vector<Nucleotide> getSequenceNucl() const;
+		 
+		Nucleotide getNucleotide(int i) const;
+
 		 
 		/**	Getter of the allele's frequency.
 		*	@return double: Allele frequency.	*/
@@ -55,6 +62,8 @@ class Allele
 		/**	Setter of the allele's frequency.
 		*	@param freq: New frequency of the given allele.	*/
 		 void setFrequency(double const& freq);
+		 
+		 double getMu(int i) const;
 };
 
 #endif

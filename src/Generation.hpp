@@ -22,19 +22,23 @@ class Generation
 	
 		std::vector<Allele*> alleles_;
 		int nb_individuals_;
-		std::mt19937 gen;	
-		
+		std::mt19937 gen;
+		std::vector<double> mus_;
+
 		
 	public: 
 	
-		/** \fn generation constructor 
+		/** \fn generation constructors 
 		 *
 		 * */ 
-		Generation(std::vector<std::string> list); 
+		Generation(bool mutate= false, std::vector<double> mus = {});
+
+		Generation(std::vector<std::string> list, std::vector<double> mus = {}); 
 		
-		Generation();
 		
-		Generation(std::vector<double> frequencies);
+		Generation(std::vector<double> frequencies, std::vector<double> mus = {});
+		
+
 		
 		/** generation destructor 
 		 * 
@@ -60,16 +64,20 @@ class Generation
 		
 		/** \fn compare
 		 */
-		 bool compare(std::string s1, std::string s2) const;
+		bool compare(std::string s1, std::string s2) const;
 		 
 		 /** This function sorts the alleles given by the file and calculates
 		  * their frequencies. 
 		  * //a completer(remarque au groupe)
 		  * @param all : the vector of string to sort to find all the possibly alleles
 		  */
-		 void sort(std::vector<std::string> all);
+		void sort(std::vector<std::string> all);
 		 
-		 void sizeEvolution();
+		void mute();
+		void mutate(Allele* allele, int position, Nucleotide M, int nbToModify);
+		std::vector<double> getMus();
+		 
+		void sizeEvolution();
 
 
 };

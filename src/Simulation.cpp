@@ -5,38 +5,45 @@
 
 using namespace std;
 
-Simulation::Simulation(Generation* firstGen){
+Simulation::Simulation(Generation* firstGen, bool allow_selection, bool allow_size_modification, bool mutate)
+	: allow_selection_(allow_selection), allow_size_modification_(allow_size_modification), mutate_(mutate)
+{
+	cout <<"Constructeur Simulation generation" << endl;
+
 	random_device rd;
   	gen=mt19937(rd());
 	evolution_pop_.push_back(firstGen);
 }
 
-Simulation::Simulation(vector<int> marker_positions, bool allow_selection, bool allow_size_modification)
+Simulation::Simulation(vector<int> marker_positions, bool allow_selection, bool allow_size_modification, bool mutate)
+	: allow_selection_(allow_selection), allow_size_modification_(allow_size_modification),mutate_(mutate)
 {
+	cout <<"Constructeur Simulation marker positions" << endl;
+
     input_file_.open("../res/test.fa");
     assert(!input_file_.fail());
     random_device rd;
     gen=mt19937(rd());
-    
-    allow_selection_ = allow_selection;
-    allow_size_modification_ = allow_size_modification;
-	
+
     evolution_pop_.push_back(new Generation(readFromFile(marker_positions, input_file_)));
 }
 
-Simulation::Simulation(vector<double> frequencies,bool allow_size_modification)
-	: allow_selection_ (false)
+Simulation::Simulation(vector<double> frequencies,bool allow_selection, bool allow_size_modification, bool mutate)
+	: allow_selection_ (allow_selection), allow_size_modification_(allow_size_modification),mutate_(mutate)
 {
-	allow_size_modification_ = allow_size_modification;
+	cout <<"Constructeur Simulation frequencies" << endl;
 	evolution_pop_.push_back(new Generation(frequencies));
+	cout <<"fin Constructeur Simulation frequencies" << endl;
+
 }
 
 Simulation::~Simulation()
 {	input_file_.close();
   
- for(auto& gen: evolution_pop_)
- {	gen=nullptr;
-  	delete gen;
+ for(auto& gen: evolution_pop_){
+	 delete gen;
+  	gen=nullptr;
+
  }
  evolution_pop_.clear();
 }
@@ -73,13 +80,14 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inp
 
 void Simulation::createNewGeneration() {
 	
-	Generation* nextGen (new Generation());
-
 	Generation* lastGen (evolution_pop_.back());
+	Generation* nextGen (new Generation(true, lastGen->getMus()));
 	int sampleSize (lastGen->getNbIndividuals());
 	int sampleResidue(lastGen->getNbIndividuals());
 	double proba (0);
 	double sumCoef(0);
+	int nbNewIndividuals(0);
+	
 	for (auto allele : lastGen->getAlleles())  {
 		if (allele != nullptr) {
 			sumCoef += allele->getFrequency()*allele->getFitness();
@@ -90,33 +98,31 @@ void Simulation::createNewGeneration() {
 		if (lastGen != nullptr) {
 			assert(lastGen->getAlleles()[i]->getFrequency() >= 0.0);
 			assert(lastGen->getAlleles()[i]->getFrequency() <= 1.0);
-			if (allow_selection_) {
-				proba = lastGen->getAlleles()[i]->getFrequency()*(1+lastGen->getAlleles()[i]->getFitness() )/ (1+ sumCoef);
-			} else { 
-				proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
-			}
+			if(sampleResidue > 0.0){
+				if (allow_selection_) {
+					proba = lastGen->getAlleles()[i]->getFrequency()*(1+lastGen->getAlleles()[i]->getFitness() )/ (1+ sumCoef);
+				} else { 
+					proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
+				}
+			} else { proba = 1.0;}
+			if (proba>1.0){ proba = 1.0;}
 			binomial_distribution<> bin_dis (sampleSize, proba);
-			int a(bin_dis(gen));
+			nbNewIndividuals= bin_dis(gen);
 			
 			sampleResidue -= lastGen->getAlleles()[i]->getFrequency() * lastGen->getNbIndividuals();
 			
 			if (i == lastGen->getAlleles().size()-1) {
-				a = sampleSize;											//dernier allèle qui complète
+				nbNewIndividuals = sampleSize;											//dernier allèle qui complète
 			}
-			/*
-			if (!(i > lastGen->getAlleles().size())){*/
-			nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), a/double(lastGen->getNbIndividuals()), lastGen->getAlleles()[i]->getFitness() ));
-			/*for(auto allele: nextGen->getAlleles()) 		// Testing the variety of fitness generated per allele
+
+			nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), nbNewIndividuals/double(lastGen->getNbIndividuals()), lastGen->getAlleles()[i]->getFitness() ));
+			
+			/*for(auto allele: nextGen->getAlleles()) 					// Testing the variety of fitness generated per allele
 			{	cout<<allele-> getFitness()<<endl;
 			}*/
-			//}
-			if (sampleSize <= 0) {
-				for (size_t j(i+1); j <  lastGen->getAlleles().size(); ++j) {
-					nextGen->allelesPushBack(new Allele(lastGen->getAlleles()[i]->getSequence(), 0));
-				}
-				i = lastGen->getAlleles().size() + 1;					//sortie de la boucle
-			} 
-			sampleSize -= a;
+
+			
+			sampleSize -= nbNewIndividuals;
 			
 		}
 	}
@@ -127,6 +133,9 @@ void Simulation::createNewGeneration() {
 	}else{
 		nextGen->setGenerationLength(lastGen->getNbIndividuals());
 	}
+	
+	if(mutate_){
+		nextGen->mute();}
 	evolution_pop_.push_back(nextGen);
 	
 	//cout << nextGen->getNbIndividuals() << endl;
@@ -138,6 +147,7 @@ void Simulation::printTerminal() const {
 		for (auto all : gen->getAlleles()) {
 			cout << "séquence de l'allèle : "<< all->getSequence() << " fréquence : " << all->getFrequency() << std::endl;
 		}
+		cout << "Fin de génération" <<endl;
 	}
 }
 
