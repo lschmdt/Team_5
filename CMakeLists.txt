@@ -1,51 +1,34 @@
-cmake_minimum_required (VERSION 2.6)
-project (Genetics)
+cmake_minimum_required (VERSION 2.6) 
+project (Team_5_project) 
 
-set(CMAKE_CXX_FLAGS " -W -Wall -pedantic -std=c++11")
+if(NOT CMAKE_BUILD_TYPE) 
+  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE) 
+endif(NOT CMAKE_BUILD_TYPE) 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11") 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic") 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3") 
+option(test "Build tests." ON) 
 
-enable_testing()
-add_subdirectory(gtest)
-set(SOURCE_FILES
-	src/main.cpp
-	src/Simulation.cpp
-	src/Simulation.hpp
-	src/Allele.cpp
-	src/Allele.hpp
-	src/Generation.cpp
-	src/Generation.hpp
-	src/Experiment.cpp
-	src/Experiment.hpp)
-
-
-include_directories(${gtest_SOURCE_DIR}/include${gtest_SOURCE_FILES})
-add_executable(Genetics ${SOURCE_FILES})
-add_executable(genetics_unittest src/Simulation.cpp src/Allele.cpp src/Generation.cpp test/test/genetics_unittest.cpp)
-
-
-target_link_libraries(genetics_unittest gtest gtest_main)
-add_test(genetics_unittest genetics_unittest)
-
-
-# check if Doxygen is installed
-find_package(Doxygen)
-if (DOXYGEN_FOUND)
-    # set input and output files
-
-	set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile.in)
-    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/doc/Doxyfile)
-    # request to configure the file
-    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-    message("Doxygen build started")
-
-    # note the option ALL which allows to build the docs together with the application
-    add_custom_target( doc ALL
-        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Generating API documentation with Doxygen"
-        VERBATIM )
-else (DOXYGEN_FOUND)
-  message("Doxygen need to be installed to generate the doxygen documentation")
-endif (DOXYGEN_FOUND)
-
-
-
+SET(SOURCE_FILES src/Simulation.cpp src/Generation.cpp src/Allele.cpp src/Experiment.cpp) 
+include_directories(${CMAKE_SOURCE_DIR}/extra/include) 
+add_executable(Genetics src/main.cpp ${SOURCE_FILES}) 
+if (test) 
+  enable_testing() 
+  find_package(GTest) 
+  if (NOT GTEST_FOUND) 
+    link_directories(${CMAKE_SOURCE_DIR}/extra/lib) 
+    SET(GTEST_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/include) 
+    SET(GTEST_BOTH_LIBRARIES libgtest.a libgtest_main.a) 
+  endif(NOT GTEST_FOUND) 
+  include_directories(${GTEST_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/src) 
+  add_executable(genetics_unittest test/test/genetics_unittest.cpp ${SOURCE_FILES}) 
+  target_link_libraries(genetics_unittest ${GTEST_BOTH_LIBRARIES} pthread) 
+  add_test(Team_5_project genetics_unittest) 
+endif(test) 
+find_package(Doxygen) 
+if (DOXYGEN_FOUND) 
+  add_custom_target(doc 
+    ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile 
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} 
+    COMMENT "Generating API documentation with Doxygen" VERBATIM) 
+endif(DOXYGEN_FOUND)
