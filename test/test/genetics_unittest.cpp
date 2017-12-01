@@ -246,6 +246,22 @@ TEST (SimulationTest, MutationTestFreqenySumJukesKantor) {
 	}
 }
 
+TEST (SimulationTest, Variation_in_population_size) 
+{ 
+	vector<double> frequencies({0.5,0.5,0.5}); 
+	
+	Simulation s (frequencies, 100, false, true, false); 
+	int size_pop (s.getEvolutionPop()[0]->getNbIndividuals());
+	
+	for (int i(0); i<200; ++i) 
+	{ 
+		s.createNewGeneration(); 
+	}
+	
+	EXPECT_NE(size_pop, s.getEvolutionPop().back()->getNbIndividuals());
+		
+}
+
 
 int main(int argc, char **argv) 
 {

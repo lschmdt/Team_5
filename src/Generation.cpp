@@ -85,14 +85,14 @@ Generation::Generation(vector<string> list, vector<double> mus, Model model, vec
 
 }
 
-Generation::Generation(vector<double> frequencies, vector<double> mus, Model model, vector<double> deltaOrPis)
+Generation::Generation(vector<double> frequencies, int population_size, vector<double> mus, Model model, vector<double> deltaOrPis)
 	 //: mus_(mus)
 {
 	
 	for(size_t i(0); i<frequencies.size(); ++i){
 		allelesPushBack(new Allele(intToString(i), frequencies[i]));
 	}
-	nb_individuals_ = 100;
+	nb_individuals_ = population_size;
 	
 	if (!mus.empty() and mus_.empty()) {
 		mus_ = mus;
@@ -191,15 +191,19 @@ void Generation::sort(vector<string> all){
 
 void Generation::sizeEvolution(){
 	
-	std::default_random_engine generator; 
-	std::bernoulli_distribution dist(0.8);
-	std::uniform_int_distribution<> nbIndividus(/*nb_individuals_ - nb_individuals_/2*/ 0, nb_individuals_+ nb_individuals_/2);
+	if(nb_individuals_ == 0){
+		return;
+	}
+	
+	static std::default_random_engine generator; 
+	std::bernoulli_distribution dist(0.2);
+	std::uniform_int_distribution<> nbIndividus(nb_individuals_ - nb_individuals_/2, nb_individuals_ + nb_individuals_/2 );
 
 	if(dist(generator)){
 		//cout << "I'm here" << endl;
-		setGenerationLength(nbIndividus(gen));
-		cout << "individus : " << nb_individuals_ <<endl;
+		setGenerationLength(nbIndividus(generator));
 	}
+	cout << "individus : " << nb_individuals_ <<endl;
 }
 
 void Generation::mute(){

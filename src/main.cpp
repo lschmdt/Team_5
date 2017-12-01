@@ -3,14 +3,14 @@
 #include "Generation.hpp"
 #include "Experiment.hpp"
 #include <vector>
-#include <tclap/CmdLine.h>
+#include <../tclap/CmdLine.h>
 using namespace TCLAP;
 
 
 int main( int argc, char **argv ) {
 	
 	
-	std::vector<int> markers;
+	/*std::vector<int> markers;
 	std::vector<double> freq;
 	std::vector<double> mutationParam;
 	std::vector<double> mus;
@@ -121,7 +121,7 @@ int main( int argc, char **argv ) {
         
             
         //std::vector<Simulation*> sim=std::vector<Simulation*>{new Simulation(markers), new Simulation(markers), new Simulation(markers)};
-        std::vector<Simulation*> sim;
+      /*  std::vector<Simulation*> sim;
         for(int i(0);i<replicate;++i)
         {    if(!markers.empty())
             {    sim.push_back(new Simulation(markers, selection, sizeModification, mutate));
@@ -137,7 +137,7 @@ int main( int argc, char **argv ) {
 	catch(std::string& e){
 		std::cerr << e << std::endl;
 		return 1;
-		}
+		}*/
 	
 	/* MAIN POUR TESTER MUTATION SUR 10 ALLELES ET 50 GENERATIONS
 	 * 
@@ -149,6 +149,16 @@ int main( int argc, char **argv ) {
 	}
 	std::cout << "Fin create newGeneration" << std::endl;
 	sim.printTerminal();*/
+	
+	//MAIN POUR TESTER LE CHANGEMENT DE TAILLE 
+	 
+	Simulation s ({0.5, 0.5, 0.5}, 100, false,true, false); 
+	
+	for (int i(0); i < 200 ; ++i) {
+		s.createNewGeneration();
+	}
+	std::cout << "Fin create newGeneration" << std::endl;
+	
 	
 	
 	

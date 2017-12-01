@@ -34,7 +34,7 @@ class Generation
 	
 		std::vector<Allele*> alleles_;
 		int nb_individuals_;
-		std::mt19937 gen;
+		//std::mt19937 gen;
 		static std::vector<double> mus_;
 		//static double delta_;
 		static Model model_;
@@ -52,7 +52,7 @@ class Generation
 		Generation(std::vector<std::string> list, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {}); 
 		
 		
-		Generation(std::vector<double> frequencies, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {});
+		Generation(std::vector<double> frequencies, int population_size, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {});
 		
 
 		
