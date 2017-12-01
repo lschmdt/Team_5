@@ -29,6 +29,8 @@ class Simulation
 		bool allow_selection_; /**< defines whether the extension "Selection" is used or not */
 		bool allow_size_modification_; /**< defines whether the extension "Time-dependency" is used or not */
 		bool mutate_;
+		
+		std::string changeLetter (std::string nucleotide);
 
 		
 	public: 
