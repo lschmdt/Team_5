@@ -64,7 +64,10 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inp
 			if (line[0]== '>'){ continue; }								//Ignore les lignes commencant par >
 			for (size_t j(0); j< NuclPositions.size(); ++j){			//Parcours tableau des markers positions
 			if (NuclPositions[j]>=size){ throw string("Markers positions are greater than the sequence in the file");}
-				sequence +=(line[NuclPositions[j]]);					//Ajoute le nucléotide marqué à la séquence
+			if (NuclPositions[j] == 'a') { 
+				
+				{
+				sequence +=(line[changeLetter(NuclPositions[j])]);					//Ajoute le nucléotide marqué à la séquence
 				}
 			nuclMarkerSite.push_back(sequence);							//Crée la case de l'individu, elle contient la séquence résultante
 			sequence.clear();											//Efface séquence pour le prochain individu
@@ -155,5 +158,26 @@ void Simulation::printTerminal() const {
 		cout << "Fin de génération" <<endl;
 	}
 }
+
+string Simulation::changeLetter (string nucleotide) 
+{
+	if (nucleotide == 'a') { return 'A';}
+	if (nucleotide == 't') {return 'T'; } 
+	if (nucleotide == 'c') { return 'C';}
+	if (nucleotide == 'g') { return 'G';}
+	
+	if (nucleotide != ('A' or 'T' or 'C' or 'G') 
+	    {
+		static default_random_engine generator; 
+		uniform_int_distribution<> AlleleChoice(1,4);
+		
+		    if (AlleleChoice(generator)== 1) { return 'A'; }
+		    if (AlleleChoice(generator)== 2) { return 'T'; }
+		    if (AlleleChoice(generator)== 3) { return 'C'; }
+		    if (AlleleChoice(generator)== 4) { return 'G'; }
+	    } else {return nucleotide; }
+}    
+		 
+	
 
 
