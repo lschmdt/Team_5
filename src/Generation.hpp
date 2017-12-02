@@ -51,9 +51,9 @@ class Generation
 
 		Generation(std::vector<std::string> list, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {}); 
 		
-		
 		Generation(std::vector<double> frequencies, int population_size, std::vector<double> mus = {}, Model model = Nothing, std::vector<double> deltaOrPis = {});
 		
+		Generation( Generation const& other);
 
 		
 		/** generation destructor 
@@ -70,7 +70,17 @@ class Generation
 		 */
 		std::vector<Allele*> getAlleles() const;
 		
+		/**getter of the number of indivuduals
+		 */
 		int getNbIndividuals() const;
+		
+		/**getter of the Model
+		 */
+		Model getModel() const;
+	
+		/**getter of DeltaOrPi attribut
+		 */
+		std::vector<double> getDeltaOrPis() const ;
 		
 		void allelesPushBack(Allele*);
 		
@@ -103,6 +113,7 @@ class Generation
 		static double kimura(Nucleotide ancientNucl, Nucleotide newNucl);
 		
 		static double felsenstein(Nucleotide ancientNucl, Nucleotide newNucll);*/
+	
 		
 };
 
