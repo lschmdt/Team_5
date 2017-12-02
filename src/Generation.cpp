@@ -123,6 +123,19 @@ Generation::Generation(vector<double> frequencies, int population_size, vector<d
 		cout << mu << endl;}*/
 }
 
+
+Generation::Generation( Generation const& other){ 
+  
+	for ( size_t i(0); i< other.getAlleles().size() ; ++i )  {
+		allelesPushBack(new Allele(*other.getAlleles()[i]));
+	} 
+	
+	nb_individuals_ = other.getNbIndividuals();
+	mus_ = other.getMus();
+	model_ = other.getModel();
+	deltaOrPis_ = other.getDeltaOrPis(); 
+}
+
 Generation::~Generation(){
 	for(auto& all: alleles_){
 		delete all;
@@ -145,6 +158,14 @@ vector<Allele*> Generation::getAlleles() const{
 
 int Generation::getNbIndividuals() const {
 	return nb_individuals_;
+}
+
+Model Generation::getModel() const {
+	return model_; 
+}
+	
+vector<double> Generation::getDeltaOrPis() const {
+	return deltaOrPis_ ;
 }
 
 void Generation::allelesPushBack(Allele* allele) {
@@ -183,7 +204,6 @@ void Generation::sort(vector<string> all){
 				}
 			}
 			alleles_.push_back(new Allele(all[i], compteur/double(all.size())));
-			//cout << "Création allele : " << all[i] << endl;
 		}
 		different = true;
 	}
@@ -200,7 +220,6 @@ void Generation::sizeEvolution(){
 	std::uniform_int_distribution<> nbIndividus(nb_individuals_ - nb_individuals_/2, nb_individuals_ + nb_individuals_/2 );
 
 	if(dist(generator)){
-		//cout << "I'm here" << endl;
 		setGenerationLength(nbIndividus(generator));
 	}
 	cout << "individus : " << nb_individuals_ <<endl;
