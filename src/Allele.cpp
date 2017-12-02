@@ -19,6 +19,13 @@ Allele::Allele(string sequence, double frequency, double fit)
 		sequence_.push_back(char2nuc[c]);
 	}
 }
+
+Allele::Allele(const Allele& other){ 		
+	sequence_ = other.getSequenceNucl(); 
+	frequency_= other.getFrequency();	
+ 	fitness_= other.getFitness(); 	
+}
+
 	 
 Allele::~Allele(){}
     
