@@ -33,6 +33,10 @@ class Allele
 		 * */ 
 		Allele(std::string sequence, double frequency, double fit=0.0); 
 		
+		/** \Allele copy constructor
+		 *
+		 * */ 
+		Allele(const Allele& other);
 		/** Allele destructor 
 		 *  
 		 * 
