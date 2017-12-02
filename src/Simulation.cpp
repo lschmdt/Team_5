@@ -111,8 +111,9 @@ void Simulation::createNewGeneration() {
 			assert(lastGen->getAlleles()[i]->getFrequency() <= 1.0);
 			if(sampleResidue > 0.0){
 				if (allow_selection_) {
-					proba = lastGen->getAlleles()[i]->getFrequency()*(1+lastGen->getAlleles()[i]->getFitness() )/ (1+ sumCoef);
-				} else { 
+                   			 double freqCoef(lastGen->getAlleles()[i]->getFrequency()*(1+lastGen->getAlleles()[i]->getFitness() )/ (1+ sumCoef));
+                   			 proba = freqCoef*lastGen->getNbIndividuals()/sampleResidue;
+				} else {
 					proba = lastGen->getAlleles()[i]->getFrequency()*lastGen->getNbIndividuals()/sampleResidue; 
 				}
 			} else { proba = 1.0;}
@@ -120,7 +121,7 @@ void Simulation::createNewGeneration() {
 			binomial_distribution<> bin_dis (sampleSize, proba);
 			nbNewIndividuals= bin_dis(gen);
 			
-			sampleResidue -= lastGen->getAlleles()[i]->getFrequency() * lastGen->getNbIndividuals();
+			sampleResidue -= int(lastGen->getAlleles()[i]->getFrequency() * lastGen->getNbIndividuals());
 			
 			if (i == lastGen->getAlleles().size()-1) {
 				nbNewIndividuals = sampleSize;											//dernier allèle qui complète
@@ -136,7 +137,6 @@ void Simulation::createNewGeneration() {
 			sampleSize -= nbNewIndividuals;
 			
 			assert(sampleSize >= 0); 
-			cout<<"sample : " <<sampleSize<<endl; 
 			
 		}
 	}
@@ -145,8 +145,6 @@ void Simulation::createNewGeneration() {
 		nextGen->mute();}
 	evolution_pop_.push_back(nextGen);
 	
-	cout << "nombre indiv :" << nextGen->getNbIndividuals() << endl;
-	cout << "  "<<endl; 
 }
 
 
