@@ -67,7 +67,7 @@ vector<string> Simulation::readFromFile(vector<int> NuclPositions, ifstream& inp
 			if (NuclPositions[j] == 'a') { 
 				
 				{
-				sequence +=(line[changeLetter(NuclPositions[j])]);					//Ajoute le nucléotide marqué à la séquence
+				sequence +=(changeLetter(line[NuclPositions[j]]));					//Ajoute le nucléotide marqué à la séquence
 				}
 			nuclMarkerSite.push_back(sequence);							//Crée la case de l'individu, elle contient la séquence résultante
 			sequence.clear();											//Efface séquence pour le prochain individu
@@ -164,7 +164,7 @@ string Simulation::changeLetter (string nucleotide)
 	if (nucleotide == 'c') { return 'C';}
 	if (nucleotide == 'g') { return 'G';}
 	
-	if (nucleotide != ('A' or 'T' or 'C' or 'G') 
+	if (nucleotide != ('A' or 'T' or 'C' or 'G')) 
 	    {
 		static default_random_engine generator; 
 		uniform_int_distribution<> AlleleChoice(1,4);
